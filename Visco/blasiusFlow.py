@@ -6,15 +6,15 @@ from scipy.interpolate import interp1d
 import blasius_integration as blasius
 ###################################
 
-vw = 0.
+vw = 0.0
 ddf0 = 0.46
 fppl = 0.
 fpph = 1.
 tol = 1e-8
 
 # Setting up grid
-x = np.linspace(0.1, 1., 10) 
-y = np.linspace(0., 1., 11)
+x = np.linspace(0.1, 1., 20) 
+y = np.linspace(0., 1., 21)
 
 eta = np.linspace(0., 6., 100)
 F = blasius.BlasiusRK(eta, vw, ddf0, fppl, fpph, tol)
@@ -34,6 +34,7 @@ for i in range(len(x)):
     v[i,:] = np.sqrt(1/(2.*x[i]))*(eta_x*Fp_x - F_x)
 
 plt.figure()
-CS = plt.contour(X,Y, psi, 20)
+levels = np.linspace(-2*np.sqrt(0.1)*vw, 0.2, 50)
+CS = plt.contour(X,Y, psi, levels)
 Q = plt.quiver(X, Y, u, v)
 plt.show()
