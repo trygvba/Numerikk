@@ -7,7 +7,7 @@ typedef enum {
 
 typedef struct {
 	char *description;
-	init (*init)(void *self);
+	int (*init)(void *self);
 	void (*describe)(void *self);
 	void (*destroy)(void *self);
 	void *(*move)(void *self, Direction direction);

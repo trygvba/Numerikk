@@ -17,7 +17,7 @@ void Object_destroy(void *self)
 void Object_describe(void *self)
 {
 	Object *obj = self;
-	printf("%s.\n"m obj->description);
+	printf("%s.\n", obj->description);
 }
 
 int Object_init(void *self)
