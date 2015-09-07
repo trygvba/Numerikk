@@ -134,7 +134,7 @@ int Map_init(void *self)
 	return 1;
 }
 
-Object MapProto {
+Object MapProto = {
 	.init = Map_init,
 	.move = Map_move,
 	.attack = Map_attack
