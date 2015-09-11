@@ -1,1 +1,1 @@
-CPPFLAGS = -Wall -lblas 
+CPPFLAGS = -Wall -lblas -llapack -larmadillo
