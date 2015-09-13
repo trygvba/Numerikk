@@ -4,38 +4,32 @@
 using namespace std;
 using namespace arma;
 
-void print_vector(double* vec, int n){
-  cout << "["
-
-  for (int i=0; i<n; i++){
-    cout << " " << vec[i];
-  }
-  cout << "]" << endl;
-
-}
-
-// main function
 int main(){
+	
+	int n = 5;
+	vec testvector = zeros<vec>(n);
 
-  int n = 5;
+	cout << "The first vector:\n\t";
+	cout << "[";
+	for (int i=0; i<n; i++){
+		testvector(i) = (double) i;
+		cout << testvector(i) <<" ";
+	}
+	cout <<"]" << endl;
 
-  Colvec<double> vec = colvec(n);
-  Colvec<double> vec2 = colvec(n);
+	vec testvector2 = zeros<vec>(n);
 
-  vec2.fill(1.)
-  for (int i=0; i<n; i++){
-    vec[i] = 
-  }
+	cout << "The second vector:\n\t";
+	cout << "[";
+	for (int i=0; i<n; i++){
+		testvector2(i) = double(i)/double(n);
+		cout << testvector2(i) << " ";
+	}
+	cout << "]" << endl;
 
-  cout << "First vector: " << endl;
-  cout << "\t";
-  print_vector(vec, n);
+	// do the dot product:
+	double dotp = dot(testvector, testvector2);
 
-  cout << "Second vector: " << endl;
-  cout << "\t";
-  print_vector(vec2, n);
-  cout << "The dot product is: " << dotproduct << endl;
-
-  delete vec
-  return 0;
+	cout << "Their dot product: " << dotp << endl;
+	return 0;
 }
