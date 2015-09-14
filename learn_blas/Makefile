@@ -11,6 +11,8 @@ all: dotproduct
 dotproduct: dotproduct.cpp
 	$(COMPILER) $(CPPFLAGS) dotproduct.cpp -o dotproduct $(LIBS)
 
+matrixproduct: matrixproduct.cpp
+	$(COMPILER) $(CPPFLAGS) matrixproduct.cpp -o matrixproduct $(LIBS)
 
 clean:
-	rm -f dotproduct
+	rm -f dotproduct matrixproduct

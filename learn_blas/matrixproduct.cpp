@@ -11,8 +11,8 @@ void print_matrix(Mat<double> A){
   cout << "[ ";
   
   for (int i=0; i<n; i++){
-    for (int j=0; j<n; j++){
-      cout << A(i,j) << ", "    
+    for (int j=0; j<m; j++){
+      cout << A(i,j) << ", ";
     }
     if (i==(n-1)){
       cout << "]" << endl;
@@ -34,7 +34,8 @@ int main(){
 
   for (int i=0; i<n; i++){
     for (int j=0; j<m; j++){
-      A(i,j) = (double) i*m + j
+      A(i,j) = (double) i*m + j;
+      B(j,i) = 1./float(m);
     }
 
   }
@@ -42,6 +43,14 @@ int main(){
   cout << "A = ";
   print_matrix(A);
 
+  cout << "\n";
+  cout << "B = ";
+  print_matrix(B);
+
+
+  cout << "\nAnd their product:" << endl;
+  cout << "A*B = ";
+  print_matrix(A*B);
   return 0;
 
 }
