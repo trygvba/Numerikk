@@ -1,10 +1,16 @@
-CPPFLAGS = -Wall -O2 -I ~/usr/include -L ~/usr/lib64
 INCDIR = ~/usr/include
 LIBDIR = ~/usr/lib64
 
-CPPFLAGS = -Wall -O2 -I $(INCDIR) -L $(LIBDIR)
+CPPFLAGS = -Wall -O2 -I $(INCDIR) -L $(LIBDIR) -Wl,-rpath=$(LIBDIR)
 LIBS = -lgfortran -lblas -llapack -larmadillo
 COMPILER = g++
 
+
+all: dotproduct
+
 dotproduct: dotproduct.cpp
-	$(COMPILER) $(CPPFLAGS) dotproduct.cpp -o dotproduct $(LIBS) -Wl,-rpath,$(LIBDIR)
+	$(COMPILER) $(CPPFLAGS) dotproduct.cpp -o dotproduct $(LIBS)
+
+
+clean:
+	rm -f dotproduct
