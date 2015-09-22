@@ -1,14 +1,16 @@
 INCDIR = ~/usr/include
 LIBDIR = ~/usr/lib64
 
-CPPFLAGS = Wall -O2 -I $(INCDIR) -L $(LIBDIR) -Wl,-rpath=$(LIBDIR)
+CPPFLAGS = -Wall
 LIBS = -lgfortran -lblas -llapack -larmadillo
 COMPILER = g++
 
+TARGETS = tridiag.cpp
+
 all: testing
 
-testing: testing.cpp
-	$(COMPILER) $(CPPFLAGS) testing.cpp -o testing
+testing: testing.cpp tridiag.cpp
+	$(COMPILER) $(CPPFLAGS) testing.cpp -o testing $(TARGETS)
 
 clean:
 	rm -f testing

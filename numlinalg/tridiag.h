@@ -7,6 +7,7 @@ class TriDiagMat {
 public:
 	TriDiagMat(double* d, double* c, double* a, int num);
 	bool is_diag_dominant();
+	void print_tridiag();
 
 private:
 	int dim;
