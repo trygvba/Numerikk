@@ -3,16 +3,16 @@
 #ifndef TRIDIAG_H
 #define TRIDIAG_H
 
-struct TriDiagMat {
+class TriDiagMat {
+public:
+	TriDiagMat(double* d, double* c, double* a, int num);
+	bool is_diag_dominant();
+
+private:
 	int dim;
 	double* subdiag;
 	double* diag;
 	double* superdiag;
-
-	//
-	void initialize(double* d, double* c, double* a, int num);
-	bool is_diag_dominant();
-
 };
 
 #endif // TRIDIAG_H
