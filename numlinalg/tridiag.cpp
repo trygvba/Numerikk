@@ -77,3 +77,19 @@ void TriDiagMat::trifactor(){
 
 bool TriDiagMat::is_lu_factored() {return lu_factored;}
 
+bool TriDiagMat::is_solveable(){
+	bool solveable = (abs(diag[0]) > abs(superdiag[0]));
+	double temp;
+	for(int i=1; i<dim; i++){
+		
+		if (!solveable) break;
+
+		if(i==(dim-1)) {temp = abs(subdiag[i-1]);}
+
+		else temp = abs(superdiag[i])+abs(subdiag[i-1]);
+
+		solveable = (abs(diag[i]) >= temp);
+	}
+	return solveable;
+}
+
