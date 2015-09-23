@@ -10,6 +10,7 @@ TriDiagMat::TriDiagMat(double* d, double* c, double* a, int n){
 	diag = d;
 	superdiag = c;
 	subdiag = a;
+	lu_factored = false;
 }
 
 
@@ -55,4 +56,24 @@ void TriDiagMat::print_tridiag(){
 	}
 	cout << endl;
 }
+
+void TriDiagMat::trifactor(){
+	if(!lu_factored){
+		// u=d, and l=a, c is kept constant.
+		for(int k=0; k<(dim-1); k++){
+			subdiag[k] = subdiag[k]/diag[k];
+			diag[k+1] = diag[k+1] - subdiag[k]*superdiag[k];
+		}
+	}
+	else if(lu_factored){
+		for(int k=dim-1; k>0; k--){
+			diag[k] = subdiag[k-1]*superdiag[k-1]+diag[k];
+			subdiag[k-1] = subdiag[k-1]*diag[k-1];
+		}
+	}
+
+	lu_factored = !(lu_factored);
+}
+
+bool TriDiagMat::is_lu_factored() {return lu_factored;}
 

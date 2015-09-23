@@ -8,12 +8,15 @@ public:
 	TriDiagMat(double* d, double* c, double* a, int num);
 	bool is_diag_dominant();
 	void print_tridiag();
+	void trifactor();
+	bool is_lu_factored();
 
 private:
 	int dim;
 	double* subdiag;
 	double* diag;
 	double* superdiag;
+	bool lu_factored;
 };
 
 #endif // TRIDIAG_H
