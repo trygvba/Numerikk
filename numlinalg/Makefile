@@ -1,12 +1,13 @@
 CPPFLAGS = -Wall
 COMPILER = g++
 
-TARGETS = tridiag.cpp
+DEPS = tridiag.h
+OBJ = testing.o tridiag.o
 
-all: testing
+%.o: %.cpp $(DEPS)
+	$(COMPILER) $(CPPFLAGS) -c -o $@ $<
 
-testing: testing.cpp
-	$(COMPILER) $(CPPFLAGS) testing.cpp -o testing $(TARGETS)
-
+testing:  $(OBJ)
+	$(COMPILER) $(CPPFLAGS) -o $@ $^
 clean:
 	rm -f testing
