@@ -10,4 +10,4 @@ OBJ = testing.o tridiag.o
 testing:  $(OBJ)
 	$(COMPILER) $(CPPFLAGS) -o $@ $^
 clean:
-	rm -f testing
+	rm -f testing *.o *~
