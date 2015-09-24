@@ -78,18 +78,34 @@ void TriDiagMat::trifactor(){
 bool TriDiagMat::is_lu_factored() {return lu_factored;}
 
 bool TriDiagMat::is_solveable(){
-	bool solveable = (abs(diag[0]) > abs(superdiag[0]));
-	double temp;
-	for(int i=1; i<dim; i++){
-		
-		if (!solveable) break;
+  
+  bool solveable = (abs(diag[0]) > abs(superdiag[0]));
+  double temp;
+  for(int i=1; i<dim; i++){
 
-		if(i==(dim-1)) {temp = abs(subdiag[i-1]);}
+    if (!solveable) break;
 
-		else temp = abs(superdiag[i])+abs(subdiag[i-1]);
+    if(i==(dim-1)) {temp = abs(subdiag[i-1]);}
 
-		solveable = (abs(diag[i]) >= temp);
-	}
-	return solveable;
+    else temp = abs(superdiag[i])+abs(subdiag[i-1]);
+
+    solveable = (abs(diag[i]) >= temp);
+  }
+  return solveable;
+}
+
+void TriDiagMat::trisolve(double* b){
+  if(!lu_factored){
+    trifactor();
+  }
+
+  for(int k=1; k<(dim); k++){
+    b[k] = b[k] - subdiag[k-1]*b[k-1]; 
+  }
+  
+  b[dim-1] = b[dim-1]/diag[dim-1];
+  for(int k=dim-2; k>=0; k--){
+    b[k] = (b[k]-superdiag[k]*b[k+1])/diag[k];
+  }
 }
 
