@@ -12,12 +12,11 @@ VPATH = $(SRCDIR):$(TESTDIR)
 
 LIBS= -lm
 
-_DEPS = tridiag.h
+_DEPS = tridiag.h cubicsplineproblem.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = testing.o tridiag.o
+_OBJ = testing.o tridiag.o cubicsplineproblem.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-
 
 $(ODIR)/%.o: %.cpp $(DEPS)
 	@mkdir -p $(ODIR)
@@ -25,6 +24,10 @@ $(ODIR)/%.o: %.cpp $(DEPS)
 
 testing: $(OBJ)
 	$(COMPILER) $(CPPFLAGS) -o $(TARGETDIR)/$@ $^ $(LIBS)
+
+testspline: $(OBJ)
+	$(COMPILER) $(CPPFLAGS) -o $(TARGETDIR)/$@ $^ $(LIBS)
+
 
 .PHONY: clean
 clean:
