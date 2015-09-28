@@ -6,7 +6,7 @@
 
 class CubicSplineProblem {
   public:
-    CubicSplineProblem(string filename);  // Constructor
+    CubicSplineProblem(std::string filename);  // Constructor
     CubicSplineProblem(double (*f) (double x), double a, double b, int n); // Second type of constructor
     ~CubicSplineProblem();                // Destructor
 

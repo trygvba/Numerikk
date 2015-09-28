@@ -2,32 +2,35 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <stdlib.h>
 #include "cubicsplineproblem.h"
 
 using namespace std;
 
-CubicSplineProblem::CubibSplineProblem(string filename){
-  ifstream ifile (filename);
+CubicSplineProblem::CubicSplineProblem(string filename){
+  ifstream ifile;
   string temp;  
   int counter=0;
+
+  ifile.open(filename.c_str());
   if (ifile.is_open()){
     // Get interval start
     getline(ifile, temp);
-    a = stod(temp);
+    a = strtod(temp.c_str(),NULL);
 
     // Get interval end
     getline(ifile, temp);
-    b = stod(temp);
+    b = strtod(temp.c_str(),NULL);
 
     // Get number of points
     getline(ifile, temp);
-    n = stoi(temp);
+    n = strtol(temp.c_str(),NULL, 10);
 
     // Allocate memory for y:
     y = new double [n+1];
 
     while (getline(ifile, temp) && counter<=n ){
-      y[counter] = stod(temp);
+      y[counter] = strtod(temp.c_str(),NULL);
     }
     
     // Close file stream:
