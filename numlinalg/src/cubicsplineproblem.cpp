@@ -48,7 +48,7 @@ CubicSplineProblem::CubicSplineProblem(double (*f) (double x), double start, dou
   y = new double [n+1];
 
   for(int i=0; i<=n; i++){
-    y[i] = (*f)(a + i*(b-a));
+    y[i] = (*f)(a + i*(b-a)/double(n));
   }
 }
 

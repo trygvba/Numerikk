@@ -8,7 +8,7 @@ using namespace std;
 
 //Test function:
 double f(double x){
-  return atan(10*x);
+  return atan(x);
 }
 
 int main(){
