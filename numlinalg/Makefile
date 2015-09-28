@@ -15,17 +15,29 @@ LIBS= -lm
 _DEPS = tridiag.h cubicsplineproblem.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = tridiag.o testing.o testspline.o
+_OBJ = tridiag.o cubicsplineproblem.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.cpp $(DEPS)
 	@mkdir -p $(ODIR)
 	$(COMPILER) $(CPPFLAGS) -c -o $@ $<
 
-testing: $(OBJ)
+#######################
+#		ALL
+#######################
+all: testing testspline
+
+
+######################
+#		TRIDIAG TEST
+######################
+testing: $(ODIR)/testing.o $(OBJ)
 	$(COMPILER) $(CPPFLAGS) -o $(TARGETDIR)/$@ $^ $(LIBS)
 
-testspline: $(OBJ)
+##############################
+#		CUBICSPLINEPROBLEM TEST
+##############################
+testspline: $(ODIR)/testspline.o $(OBJ)
 	$(COMPILER) $(CPPFLAGS) -o $(TARGETDIR)/$@ $^ $(LIBS)
 
 

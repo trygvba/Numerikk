@@ -62,7 +62,7 @@ CubicSplineProblem::~CubicSplineProblem(void) {
 // Print problem:
 void CubicSplineProblem::print(){
   cout << "The problem is defined on the interval [" << a << ", " << b << "]" << endl;
-  cout << "with " << n+1 << "points." << endl;
+  cout << "with " << n+1 << " points." << endl;
   cout << "The cubic splines should interpolate at the following values: " << endl;
 
   for(int i=0; i<=n; i++){
