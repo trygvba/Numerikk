@@ -6,7 +6,8 @@
 
 class CubicSplineProblem {
   public:
-    CubicSplineProblem(string filename);
+    CubicSplineProblem(string filename);  // Constructor
+    ~CubicSplineProblem();                // Destructor
   private:
     double a;          // interval start
     double b;          // interval end
