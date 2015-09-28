@@ -7,7 +7,10 @@
 class CubicSplineProblem {
   public:
     CubicSplineProblem(string filename);  // Constructor
+    CubicSplineProblem(double (*f) (double x), double a, double b, int n); // Second type of constructor
     ~CubicSplineProblem();                // Destructor
+
+    void print();      // Print problem
   private:
     double a;          // interval start
     double b;          // interval end
