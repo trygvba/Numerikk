@@ -179,13 +179,24 @@ int CubicSplineProblem::get_index(double x){
     return n-1;
   }
   else{
-    double temp=x-a;
     int i=0;
 
-    while(temp>=0){
-      
+    while(a+i/double(n)*(b-a)){
+			i++;     
     }
+		return (i-1);
   }
+}
 
-  
+// Evaluate the spline at a point x:
+double CubicSplineProblem::eval_at_point(double x){
+	int idx = get_index(x);
+	double xi = x-a-i/double(n)*(b-a);
+	double res = coeffs[i][0];
+
+	res += coeffs[i][1]*xi;
+	res += coeffs[i][2]*pow(xi,2);
+	res += coeffs[i][3]*pow(xi,3);
+
+	return res;
 }
