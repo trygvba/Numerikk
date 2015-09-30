@@ -6,6 +6,7 @@
 class TriDiagMat {
 public:
   TriDiagMat(double* d, double* c, double* a, int num);
+  ~TriDiagMat();
   bool is_diag_dominant();
   bool is_solveable();
   void print_tridiag();
