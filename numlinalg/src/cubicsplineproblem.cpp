@@ -2,7 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstring>
 #include <stdlib.h>
+#include <math.h>
 #include "cubicsplineproblem.h"
 #include "tridiag.h"
 
@@ -14,25 +16,32 @@ CubicSplineProblem::CubicSplineProblem(string filename){
   int counter=0;
 
   ifile.open(filename.c_str());
+//  ifile.open(filename.c_str());
   if (ifile.is_open()){
     // Get interval start
     getline(ifile, temp);
-    a = strtod(temp.c_str(),NULL);
+    a = atof(temp.c_str());
 
     // Get interval end
     getline(ifile, temp);
-    b = strtod(temp.c_str(),NULL);
+    b = atof(temp.c_str());
 
     // Get number of points
     getline(ifile, temp);
-    n = strtol(temp.c_str(),NULL, 10);
+    n = atoi(temp.c_str());
 
     // Allocate memory for y:
     y = new double [n+1];
 
-    while (getline(ifile, temp) && counter<=n ){
-      y[counter] = strtod(temp.c_str(),NULL);
+    while (!ifile.eof() && counter<=n ){
+      getline(ifile, temp);
+      y[counter] = atof(temp.c_str());
+      if(ifile.fail()){
+        cout << "Couldn't read a double from file." << endl;
+      }
+      counter++;
     }
+    
     
     // Close file stream:
     ifile.close();

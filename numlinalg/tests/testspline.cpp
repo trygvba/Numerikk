@@ -12,12 +12,14 @@ double f(double x){
 }
 
 int main(){
-  double a = 0.;
-  double b = 4.;
+  /*
+  double a = -1.;
+  double b = 1.;
   
-  int num_points = 4;
-
-  CubicSplineProblem testprob(&f, a, b, num_points);
+  int num_points = 14;
+  */
+  //CubicSplineProblem testprob(&f, a, b, num_points);
+  CubicSplineProblem testprob("inputfiles/testspline.txt");
 
   testprob.print();
   
