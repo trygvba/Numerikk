@@ -12,13 +12,17 @@ class CubicSplineProblem {
     ~CubicSplineProblem();                     // Destructor
 
     void print();      // Print problem
+    void print_coeffs();  // Print coeffs.
     void solve_moments(); // Solve to get moments.
+    void eval_coeffs();   // Evaluate coeffs
   private:
     double a;          // interval start
     double b;          // interval end
     int n;             // number of interpolating points
     double* y;         // interpolating values
     double* moms;      // moments
+
+    double** coeffs;   // 2-dimensional array with coefficients.
 };
 
 #endif // CUBICSPLINEPROBLEM_H

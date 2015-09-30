@@ -12,14 +12,18 @@ double f(double x){
 }
 
 int main(){
-  double a = -1.;
-  double b = 1.;
+  double a = 0.;
+  double b = 4.;
   
-  int num_points = 14;
+  int num_points = 4;
 
   CubicSplineProblem testprob(&f, a, b, num_points);
 
   testprob.print();
+  
+  cout << endl;
+  
+  testprob.print_coeffs();
 
   return 0;
 }

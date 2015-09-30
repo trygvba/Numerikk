@@ -38,7 +38,11 @@ CubicSplineProblem::CubicSplineProblem(string filename){
     ifile.close();
   }
 
+  coeffs = NULL;
+  moms = NULL;
+  // get moments and coeffs
   solve_moments();
+  eval_coeffs();
 }
 
 // Second type of Constructor:
@@ -53,15 +57,26 @@ CubicSplineProblem::CubicSplineProblem(double (*f) (double x), double start, dou
   for(int i=0; i<=n; i++){
     y[i] = (*f)(a + i*(b-a)/double(n));
   }
+  
+  coeffs = NULL;
+  moms = NULL;
 
   solve_moments();
+  eval_coeffs();
 }
 
 CubicSplineProblem::~CubicSplineProblem(void) {
   // Delete the pointer to interpolating points
-  delete [] y;
-  delete [] moms;
-}
+  if(y) delete [] y;
+  if(moms) delete [] moms;
+  
+  if(coeffs){
+    for(int i=0; i<n; i++){
+      delete [] coeffs[i];
+    }
+    delete [] coeffs; 
+  }
+} 
 
 //-----------------------------------------------------
 
@@ -76,13 +91,24 @@ void CubicSplineProblem::print(){
   }
 }
 
+// Print coefficients:
+void CubicSplineProblem::print_coeffs(){
+  cout << "The coefficients for the piecewise polynomials are: " << endl;
+  for(int i=0; i<n; i++){
+    cout << coeffs[i][0] << " ";
+    cout << coeffs[i][1] << " ";
+    cout << coeffs[i][2] << " ";
+    cout << coeffs[i][3] << endl;
+  }
+}
+
 // Solve to get moments
 void CubicSplineProblem::solve_moments(){
   if(!moms){
-  moms = new double[n+1];
+    moms = new double[n+1];
   }
   // Set step size:
-  double h=y[1]-y[0];
+  double h=(b-a)/double(n);
 
   double* sub;
   double* sup;
@@ -108,9 +134,30 @@ void CubicSplineProblem::solve_moments(){
 
   // Initialize tridiagonal matrix
   TriDiagMat trid(diag, sub, sup, n-1);
-  trid.trisolve(moms+1);  // +1 to increment to start at moms[1].
+  trid.trisolve((moms+1));  // +1 to increment to start at moms[1].
   
   delete [] sub;
   delete [] sup;
   delete [] diag;
+}
+
+// Evaluate the coefficients, when given moments:
+void CubicSplineProblem::eval_coeffs(){
+  
+  // There are n polynomials in the partition  
+  coeffs = new double*[n];
+
+  // Step size
+  double h = (b-a)/double(n);
+
+  // Go through each polynomial
+  for(int i=0; i<n; i++){
+    coeffs[i] = new double[4];
+    
+    coeffs[i][0] = y[i];
+    coeffs[i][1] = (y[i+1] - y[i])/h - h/3.*moms[i]-h/6.*moms[i+1];
+    coeffs[i][2] = 0.5*moms[i];
+    coeffs[i][3] = (moms[i+1]-moms[i])/(6.*h);
+  }
+
 }
