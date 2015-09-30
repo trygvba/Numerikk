@@ -13,6 +13,11 @@ TriDiagMat::TriDiagMat(double* d, double* c, double* a, int n){
 	lu_factored = false;
 }
 
+TriDiagMat::~TriDiagMat(){
+  // No 'new'-statements, so
+  // no clean-up is expected here.
+}
+
 
 // uses cmath
 bool TriDiagMat::is_diag_dominant(){
