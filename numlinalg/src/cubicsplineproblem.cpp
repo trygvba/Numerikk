@@ -191,12 +191,12 @@ int CubicSplineProblem::get_index(double x){
 // Evaluate the spline at a point x:
 double CubicSplineProblem::eval_at_point(double x){
 	int idx = get_index(x);
-	double xi = x-a-i/double(n)*(b-a);
-	double res = coeffs[i][0];
+	double xi = x-a-idx/double(n)*(b-a);
+	double res = coeffs[idx][0];
 
-	res += coeffs[i][1]*xi;
-	res += coeffs[i][2]*pow(xi,2);
-	res += coeffs[i][3]*pow(xi,3);
+	res += coeffs[idx][1]*xi;
+	res += coeffs[idx][2]*pow(xi,2);
+	res += coeffs[idx][3]*pow(xi,3);
 
 	return res;
 }
@@ -204,7 +204,7 @@ double CubicSplineProblem::eval_at_point(double x){
 // Evaluate spline at several points x and store values in y.
 // Number of points is num_points
 void CubicSplineProblem::eval_spline(double* x, double* y, int num_points){
-	for(int i=0; i<num_points, i++){
-		y[i] = eval_at_point(x);
+	for(int i=0; i<num_points; i++){
+		y[i] = eval_at_point(x[i]);
 	}
 }
