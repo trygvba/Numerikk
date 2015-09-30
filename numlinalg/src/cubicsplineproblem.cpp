@@ -42,7 +42,6 @@ CubicSplineProblem::CubicSplineProblem(string filename){
       counter++;
     }
     
-    
     // Close file stream:
     ifile.close();
   }
@@ -169,4 +168,24 @@ void CubicSplineProblem::eval_coeffs(){
     coeffs[i][3] = (moms[i+1]-moms[i])/(6.*h);
   }
 
+}
+
+// Get index of interval where point x lies
+int CubicSplineProblem::get_index(double x){
+  if(x <= a){
+    return 0;
+  }
+  else if(x >= b){
+    return n-1;
+  }
+  else{
+    double temp=x-a;
+    int i=0;
+
+    while(temp>=0){
+      
+    }
+  }
+
+  
 }

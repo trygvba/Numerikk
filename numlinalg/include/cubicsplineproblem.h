@@ -15,6 +15,7 @@ class CubicSplineProblem {
     void print_coeffs();  // Print coeffs.
     void solve_moments(); // Solve to get moments.
     void eval_coeffs();   // Evaluate coeffs
+    int get_index(double x); // Get interval where x lies.
   private:
     double a;          // interval start
     double b;          // interval end
