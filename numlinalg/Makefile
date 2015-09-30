@@ -12,10 +12,10 @@ VPATH = $(SRCDIR):$(TESTDIR)
 
 LIBS= -lm
 
-_DEPS = tridiag.h cubicsplineproblem.h
+_DEPS = tridiag.h cubicsplineproblem.h plotter.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = tridiag.o cubicsplineproblem.o
+_OBJ = tridiag.o cubicsplineproblem.o plotter.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.cpp $(DEPS)
