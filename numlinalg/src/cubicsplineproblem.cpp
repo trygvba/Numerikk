@@ -200,3 +200,11 @@ double CubicSplineProblem::eval_at_point(double x){
 
 	return res;
 }
+
+// Evaluate spline at several points x and store values in y.
+// Number of points is num_points
+void CubicSplineProblem::eval_spline(double* x, double* y, int num_points){
+	for(int i=0; i<num_points, i++){
+		y[i] = eval_at_point(x);
+	}
+}

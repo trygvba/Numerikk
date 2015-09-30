@@ -17,6 +17,7 @@ class CubicSplineProblem {
     void eval_coeffs();   // Evaluate coeffs
     int get_index(double x); // Get interval where x lies.
 		double eval_at_point(double x);	// Evaluate the spline at a point.
+		void eval_spline(double* x, double *y, int num_points); // Evaluate spline at several points.
   private:
     double a;          // interval start
     double b;          // interval end
