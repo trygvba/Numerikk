@@ -5,10 +5,11 @@ project (NumLinAlg)
 # add the binary tree to the search path for include files
 include_directories("${PROJECT_SOURCE_DIR}/include")
 add_subdirectory(src)
+add_subdirectory(../plotter "${CMAKE_CURRENT_BINARY_DIR}/plotter")
 
 # add the executables:
 add_executable(testing tests/testing.cpp)
 target_link_libraries (testing TriDiagMat)
 
 add_executable(testspline tests/testspline.cpp)
-target_link_libraries(testspline CubicSplineProblem)
+target_link_libraries(testspline CubicSplineProblem Plotter)
