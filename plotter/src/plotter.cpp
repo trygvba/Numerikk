@@ -58,7 +58,7 @@ void Plotter::plot_line(double *x, double *y, int num_points){
     vtkSmartPointer<vtkChartXY>::New();
 
   view->GetScene()->AddItem(chart);
-  vtkPlot* line = chart->AddPlot(vtkChart::LINE);
+  vtkPlot *line = chart->AddPlot(vtkChart::LINE);
 
   #if VTK_MAJOR_VERSION <= 5
     line->SetInput(table, 0, 1);
@@ -66,11 +66,12 @@ void Plotter::plot_line(double *x, double *y, int num_points){
     line->SetInputData(table, 0, 1);
   #endif
     line->SetColor(0, 255, 0, 255);
-    line->SetWidth(1.0);
+    line->SetWidth(1.5);
 
   // Start interactor
   view->GetInteractor()->Initialize();
   view->GetInteractor()->Start();
+
 }
   
 
