@@ -4,6 +4,7 @@ project (NumLinAlg)
 
 # add the binary tree to the search path for include files
 include_directories("${PROJECT_SOURCE_DIR}/include")
+include_directories("${PROJECT_SOURCE_DIR}/../plotter/include")
 add_subdirectory(src)
 add_subdirectory(../plotter "${CMAKE_CURRENT_BINARY_DIR}/plotter")
 
