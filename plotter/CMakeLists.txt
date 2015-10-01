@@ -5,5 +5,7 @@ PROJECT(Plotter)
 find_package(VTK REQUIRED)
 include(${VTK_USE_FILE})
 
-include_directories("${PROJECT_SOURCE_DIR}/MathFunctions")
+include_directories("${PROJECT_SOURCE_DIR}/include")
 add_subdirectory (src)
+
+
