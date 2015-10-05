@@ -39,10 +39,10 @@ int main(){
   
   // Set x:
   for(int i=0; i<num_points; i++){
-    x[i] = i/double(num_points-1)*4.;
+    x[i] =testprob.get_intstart()+ i/double(num_points-1)*(testprob.get_intend()-testprob.get_intstart());
   }
   testprob.eval_spline(x, y, num_points);
-
+ 
   // Set up for plotting.
   Plotter fig;
   fig.plot_line(x,y, num_points);

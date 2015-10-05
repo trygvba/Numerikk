@@ -203,3 +203,12 @@ void CubicSplineProblem::eval_spline(double* x, double* y, int num_points){
     y[i] = eval_at_point(x[i]);
   }
 }
+
+// Functions return interval start and -end
+double CubicSplineProblem::get_intstart(){
+	return a;
+}
+
+double CubicSplineProblem::get_intend(){
+	return b;
+}
