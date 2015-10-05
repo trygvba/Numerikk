@@ -21,10 +21,6 @@ Plotter::Plotter(){
 	// Do nothing
 }
 
-Plotter::~Plotter(){
-	// Do nothing
-}
-
 /* -------------------------------- */
 /*			PLOT_LINE									  */
 /* -------------------------------- */
