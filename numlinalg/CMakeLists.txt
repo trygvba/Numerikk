@@ -14,3 +14,6 @@ target_link_libraries (testing TriDiagMat)
 
 add_executable(testspline tests/testspline.cpp)
 target_link_libraries(testspline CubicSplineProblem Plotter)
+
+add_executable(testpoisson tests/testpoisson.cpp)
+target_link_libraries(testpoisson Poisson1D Plotter)

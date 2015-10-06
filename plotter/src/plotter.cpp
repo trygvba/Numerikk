@@ -68,6 +68,13 @@ void Plotter::plot_line(double *x, double *y, int num_points){
   view->GetInteractor()->Initialize();
   view->GetInteractor()->Start();
 
+  cout << "Reference count of vtkContextView variable: " << view->GetReferenceCount()<< endl;
+  cout << "Reference count of vtkChartXY object: " << chart->GetReferenceCount() << endl;
+  cout << "Reference count of vtkTable object: " << table->GetReferenceCount() << endl;
+  cout << "Reference count of vtkDoubleArray: " << arrX->GetReferenceCount() << ", "
+    << arrY->GetReferenceCount() << endl;
+  cout << "Reference count of the interactor object: " << view->GetInteractor()->GetReferenceCount() << endl;
+  
 }
   
 
