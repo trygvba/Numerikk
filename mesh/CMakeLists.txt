@@ -5,3 +5,7 @@ project (Mesh)
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
 add_subdirectory(src)
+
+# Add executables:
+add_executable(testtriangulateio tests/testtriangulateio.cpp)
+target_link_libraries(testtriangulateio Triangle)
