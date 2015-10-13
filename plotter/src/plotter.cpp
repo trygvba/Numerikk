@@ -65,6 +65,7 @@ void Plotter::plot_line(double *x, double *y, int num_points){
     line->SetWidth(1.5);
 
   // Start interactor
+	view->DebugOn();
   view->GetInteractor()->Initialize();
   view->GetInteractor()->Start();
 
