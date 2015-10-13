@@ -9,7 +9,7 @@ int main(){
   
   double* pointlist;
   int* pointmarkerlist;
-  int num_point;
+  int num_points;
   int number_of_patt;
   int bound_marks;
 
@@ -111,13 +111,17 @@ int main(){
 
   int num_regs = 0;
 
+  
   // Declare struct!
-  struct triangulateio *in;
-  struct triangulateio *out;
-  struct triangulateio *vorout;
-
+  struct triangulateio *in = new triangulateio;
+  struct triangulateio *out = new triangulateio;
+  struct triangulateio *vorout = new triangulateio;
+  
+  cout << "Good so far" << endl;
+  
   // Define the right properties of input struct
   in->pointlist = pointlist;
+
   in->numberofpoints = num_points;
   in->numberofpointattributes = 0;
   in->pointmarkerlist = pointmarkerlist;
@@ -129,5 +133,16 @@ int main(){
   in->numberofholes = num_holes;
   in->holelist = holelist;
   in->numberofregions = num_regs;
+
+  // Clean up:
+  delete [] pointlist;
+  delete [] pointmarkerlist;
+  delete [] segmentlist;
+  delete [] segmentmarkerlist;
+  delete [] holelist;
+
+  delete in;
+  delete out;
+  delete vorout;
   return 0;
 }
