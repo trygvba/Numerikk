@@ -2,6 +2,8 @@
 
 #include "triangle.h"
 #include <iostream>
+#include <string>
+#include <cstdlib>
 
 using namespace std;
 
@@ -134,6 +136,29 @@ int main(){
   in->holelist = holelist;
   in->numberofregions = num_regs;
 
+	/*--------------------
+	 *		Let's try to
+	 *    triangulate
+	 *--------------------*/
+	// Need to set up out and vorout
+	out->pointlist = NULL;
+	out->trianglelist = NULL;
+	out->segmentlist = NULL;
+	out->pointmarkerlist = NULL;
+	out->segmentmarkerlist = NULL;
+	out->edgelist = NULL;
+	out->neighborlist = NULL;
+	out->edgemarkerlist = NULL;
+
+	vorout->pointlist = NULL;
+	vorout->pointattributelist = NULL;
+	vorout->edgelist = NULL;
+	vorout->normlist = NULL;
+
+	char* options = "pqjnvzV";
+
+	triangulate(options, in, out, vorout);
+
   // Clean up:
   delete [] pointlist;
   delete [] pointmarkerlist;
@@ -141,8 +166,21 @@ int main(){
   delete [] segmentmarkerlist;
   delete [] holelist;
 
-  delete in;
-  delete out;
-  delete vorout;
+	
+	free(out->pointlist);
+	free(out->trianglelist);
+	free(out->segmentlist);
+	free(out->pointmarkerlist);
+	free(out->segmentmarkerlist);
+	free(out->neighborlist);
+	
+	free(vorout->pointlist);
+	free(vorout->pointattributelist);
+	free(vorout->normlist);
+	free(vorout->edgelist);
+
+	delete in;
+	delete out;
+	delete vorout;
   return 0;
 }

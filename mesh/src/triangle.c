@@ -216,6 +216,7 @@
 #define REAL double
 #endif /* not SINGLE */
 
+#define ANSI_DECLARATORS
 /* If yours is not a Unix system, define the NO_TIMER compiler switch to     */
 /*   remove the Unix-specific timing code.                                   */
 
@@ -1437,7 +1438,7 @@ int size;
 }
 
 #ifdef ANSI_DECLARATORS
-void trifree(VOID *memptr)
+void trifree(void *memptr)
 #else /* not ANSI_DECLARATORS */
 void trifree(memptr)
 VOID *memptr;
