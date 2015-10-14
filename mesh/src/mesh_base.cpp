@@ -6,8 +6,6 @@
 #include <cstdlib>
 
 using namespace std;
-
-
 /*------------------------------------
  *      CONSTRUCTORS
  *      AND
