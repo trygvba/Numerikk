@@ -156,6 +156,7 @@ void MeshBase::create_mesh(struct triangulateio* in){
 	 *		clean up
 	 *-----------------*/
 	free(out->pointlist);
+	free(out->pointmarkerlist);
 	free(out->trianglelist);
 	free(out->segmentlist);
 	free(out->segmentmarkerlist);
