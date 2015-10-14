@@ -3,6 +3,7 @@
 #include <iostream>
 #include "mesh_base.h"
 #include "triangle.h"
+#include <cstdlib>
 
 using namespace std;
 
@@ -41,6 +42,27 @@ MeshBase::~MeshBase(){
   
 }
 
+/*--------------------------------------------
+ *		PUBLIC MEMBER FUNCTIONS
+ *--------------------------------------------*/
+void MeshBase::print(){
+	cout << "Mesh consist of " << num_points << " points:" << endl;
+	for (int i=0; i<num_points; i++){
+		cout << i << ": " << points[i][0] << ", " << points[i][1] << endl;
+	}
+
+	cout << "\nMesh consists of " << num_tri << " triangles:" << endl;
+	for (int i=0; i<num_tri; i++){
+		cout << i << ": " << elements[i][0] << " " << elements[i][1] <<
+			" " << elements[i][2] << endl;
+	}
+
+}
+
+
+
+
+
 /*-------------------------------------------
  *		PRIVATE MEMBER FUNCTIONS
  *-------------------------------------------*/
@@ -51,32 +73,32 @@ MeshBase::~MeshBase(){
 // Triangle and triangulates and sets
 // the various member variables
 // of this class correctly.
-MeshBase::create_mesh(struct triangulateio* in){
+void MeshBase::create_mesh(struct triangulateio* in){
 	// Before anything else, we need
 	// to make sure every field of
 	// the input struct is properly
 	// initialized
 	if (!in->pointlist){
 		cout << "input pointlist not initialized." << endl;
-		break;
+		exit(0);
 	}
 	else if(in->numberofpointattributes>0 && !in->pointattributelist){
 		cout << "input point attribute list not initialized." << endl;
-		break;
+		exit(0);
 	}
 	else if(in->numberofsegments>0 && !in->segmentlist){
 		cout << "input segment list not properly set." << endl;
-		break;
+		exit(0);
 	}
 	// pointmarkerlist or segmentmarkerlist is not set, then 
 	// all markers are zero.
 	else if(in->numberofholes>0 && !in->holelist ){
 		cout << "input hole list not properly set." << endl;
-		break;
+		exit(0);
 	}
 	else if(in->numberofregions>0 && !in->regionlist){
 		cout << "input region list not properly set." << endl;
-		break;
+		exit(0);
 	}
 
 	/*-----------------------
@@ -123,22 +145,57 @@ MeshBase::create_mesh(struct triangulateio* in){
 	 *------------------*/
 	triangulate(options, in, out, vorout);
 
+	/*------------------
+	 *	set data
+	 *  in object
+	 *------------------*/
+	set_points_from_triangleout(out);
+	set_elements_from_triangleout(out);
+
 	/*-----------------
 	 *		clean up
 	 *-----------------*/
-	if(out->pointlist) free(out->pointlist);
-	if(out->trianglelist) free(out->trianglelist);
-	if(out->segmentlist) free(out->segmentlist);
-	if(out->segmentmarkerlist) free(out->segmentmarkerlist);
-	if(out->edgelist) free(out->edgelist);
-	if(out->edgemarkerlist) free(out->edgemarkerlist);
+	free(out->pointlist);
+	free(out->trianglelist);
+	free(out->segmentlist);
+	free(out->segmentmarkerlist);
+	free(out->edgelist);
+	free(out->edgemarkerlist);
 
 	delete out;
 
-	if(vorout->pointlist) free(vorout->pointlist);
-	if(vorout->pointattributelist) free(pointattributelist);
-	if(vorout->edgelist) free(vorout->edgelist);
-	if(vorout->normlist) free(vorout->normlist);
+	free(vorout->pointlist);
+	free(vorout->pointattributelist);
+	free(vorout->edgelist);
+	free(vorout->normlist);
 
 	delete vorout;
+}
+
+// To set the points data from output of Triangle
+void MeshBase::set_points_from_triangleout(struct triangulateio* out){
+	num_points = out->numberofpoints;
+	// Initialize points array
+	points = new double*[num_points];
+	for(int i=0; i<num_points; i++){
+		points[i] = new double[2];
+		points[i][0] = out->pointlist[2*i];
+		points[i][1] = out->pointlist[2*i+1];
+	}
+
+}
+
+// To set the triangle data from output of Triangle
+void MeshBase::set_elements_from_triangleout(struct triangulateio* out){
+	num_tri = out->numberoftriangles;
+	// Initialize tri array
+	elements = new int*[num_tri];
+
+	for(int i=0; i<num_tri; i++){
+		elements[i] = new int[3];
+		elements[i][0] = out->trianglelist[3*i];
+		elements[i][1] = out->trianglelist[3*i+1];
+		elements[i][2] = out->trianglelist[3*i+2];
+	}
+
 }

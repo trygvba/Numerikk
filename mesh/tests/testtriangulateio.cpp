@@ -1,6 +1,7 @@
 //: testtriangulatio.cpp
 
 #include "triangle.h"
+#include "mesh_base.h"
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -116,11 +117,11 @@ int main(){
   
   // Declare struct!
   struct triangulateio *in = new triangulateio;
+	/*
   struct triangulateio *out = new triangulateio;
   struct triangulateio *vorout = new triangulateio;
-  
-  cout << "Good so far" << endl;
-  
+  */
+
   // Define the right properties of input struct
   in->pointlist = pointlist;
 
@@ -140,6 +141,9 @@ int main(){
 	 *		Let's try to
 	 *    triangulate
 	 *--------------------*/
+	 MeshBase testmesh(in);
+	 testmesh.print();
+	 /*
 	// Need to set up out and vorout
 	out->pointlist = NULL;
 	out->trianglelist = NULL;
@@ -158,6 +162,8 @@ int main(){
 	char* options = "pqjnvzV";
 
 	triangulate(options, in, out, vorout);
+	*/
+
 
   // Clean up:
   delete [] pointlist;
@@ -166,7 +172,7 @@ int main(){
   delete [] segmentmarkerlist;
   delete [] holelist;
 
-	
+	/*
 	free(out->pointlist);
 	free(out->trianglelist);
 	free(out->segmentlist);
@@ -178,9 +184,9 @@ int main(){
 	free(vorout->pointattributelist);
 	free(vorout->normlist);
 	free(vorout->edgelist);
-
+	*/
 	delete in;
-	delete out;
-	delete vorout;
+	//delete out;
+	//delete vorout;
   return 0;
 }
