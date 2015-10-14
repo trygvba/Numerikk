@@ -6,6 +6,7 @@ class MeshBase {
   public:
     // Constructors and destructors
     MeshBase();     // default constructor    
+		MeshBase(struct triangulateio* in);	// constructor taking in triangulateio struct
     ~MeshBase();
     
   private:
