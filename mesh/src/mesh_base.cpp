@@ -20,6 +20,10 @@ MeshBase::MeshBase(){
   elements = NULL;
 }
 
+MeshBase::MeshBase(struct triangulateio* in){
+	create_mesh(in);
+}
+
 MeshBase::~MeshBase(){
   if(points){
     for(int i=0; i<num_points; i++){
@@ -37,7 +41,17 @@ MeshBase::~MeshBase(){
   
 }
 
-MeshBase::MeshBase(struct triangulateio* in){
+/*-------------------------------------------
+ *		PRIVATE MEMBER FUNCTIONS
+ *-------------------------------------------*/
+
+//create_mesh(...)
+// to be used by various constructors.
+// takes a struct triangulateio from
+// Triangle and triangulates and sets
+// the various member variables
+// of this class correctly.
+MeshBase::create_mesh(struct triangulateio* in){
 	// Before anything else, we need
 	// to make sure every field of
 	// the input struct is properly
