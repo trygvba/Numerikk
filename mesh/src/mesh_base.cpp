@@ -15,8 +15,13 @@ using namespace std;
 MeshBase::MeshBase(){
   num_points = 0;
   num_tri = 0;
+  num_edges = 0;
+
   points = NULL;
   elements = NULL;
+  edges = NULL;
+  edgemarkers = NULL;
+  all_edges = false;
 }
 
 MeshBase::MeshBase(struct triangulateio* in){
@@ -24,13 +29,14 @@ MeshBase::MeshBase(struct triangulateio* in){
 }
 
 MeshBase::~MeshBase(){
+  // delete point data
   if(points){
     for(int i=0; i<num_points; i++){
       delete [] points[i];
     }
     delete [] points;
   }
-
+  // delete element data
   if(elements){
     for(int i=0; i<num_tri; i++){
       delete [] elements[i];
@@ -38,6 +44,18 @@ MeshBase::~MeshBase(){
     delete [] elements;
   }
   
+  // delete edge data
+  if(edges){
+    for(int i=0; i<num_edges; i++){
+      delete [] edges[i];
+    }
+    delete [] edges
+  }
+
+  if(edgemarkers){
+    delete [] edgemarkers;
+  }
+
 }
 
 /*--------------------------------------------
@@ -54,7 +72,7 @@ void MeshBase::print(){
 		cout << i << ": " << elements[i][0] << " " << elements[i][1] <<
 			" " << elements[i][2] << endl;
 	}
-
+  
 }
 
 
@@ -196,5 +214,39 @@ void MeshBase::set_elements_from_triangleout(struct triangulateio* out){
 		elements[i][1] = out->trianglelist[3*i+1];
 		elements[i][2] = out->trianglelist[3*i+2];
 	}
+
+}
+
+// To set edge data in mesh depending on whether all edges should be given or only 
+// the boundary edges.
+void MeshBase::set_edges_from_triangleout(struct triangulateio *out){
+  if(all_edges){
+    num_edges = out->numberofedges;
+    // initialize edges array
+    edges = new int*[num_edges];
+    edgemarkers = new int[num_edges];
+
+    for(int i=0; i<num_edges; i++){
+      edges[i] = new int[2];
+      edges[i][0] = out->edgelist[2*i];
+      edges[i][1] = out->edgelist[2*i+1];
+
+      edgemarkers[i] = out->edgemarkerlist[i];
+    }
+  }
+  else{
+    num_edges = out->numberofsegments;
+    // initialize edge arrays
+    edges = new int*[num_edges];
+    edgemarkers = new int[num_edges];
+
+    for(int i=0; i<num_edges; i++){
+      edges[i] = new int[2];
+      edges[i][0] = out->segmentlist[2*i];
+      edges[i][1] = out->segmentlist[2*i+1];
+
+      edgemarkers[i] = out->segmentmarkerlist[i];
+    }
+  }
 
 }
