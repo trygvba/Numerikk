@@ -16,7 +16,7 @@ class MeshBase {
     // Private member variables:
     int num_points; // number of points
     int num_tri;    // number of triangles
-    int num_edges   // number of edges
+    int num_edges;   // number of edges
 
     double** points;  // array with points
     int** elements;   // elements connectivity matrix
@@ -38,7 +38,8 @@ class MeshBase {
 		void create_mesh(struct triangulateio* in);	// To be used by most constructors.
 		void set_points_from_triangleout(struct triangulateio *out); // To set the points
 		void set_elements_from_triangleout(struct triangulateio *out); // set element data.
-    void set_edges_from_triangleout(struct triangulateio *out);
+    void set_edges_from_triangleout(struct triangulateio *out);    // set edge data.
+    char* get_triswitches(bool edges_option);                 // Get char* pointer to be used by Triangle.
 };
 
 

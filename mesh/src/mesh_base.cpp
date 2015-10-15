@@ -4,6 +4,8 @@
 #include "mesh_base.h"
 #include "triangle.h"
 #include <cstdlib>
+#include <string>
+#include <stdio.h>
 
 using namespace std;
 /*------------------------------------
@@ -45,17 +47,17 @@ MeshBase::~MeshBase(){
   }
   
   // delete edge data
+
   if(edges){
     for(int i=0; i<num_edges; i++){
       delete [] edges[i];
     }
-    delete [] edges
+    delete [] edges;
   }
 
   if(edgemarkers){
     delete [] edgemarkers;
   }
-
 }
 
 /*--------------------------------------------
@@ -141,19 +143,10 @@ void MeshBase::create_mesh(struct triangulateio* in){
   vorout->edgelist = NULL;
   vorout->normlist = NULL;
 
-
-  /*-----------------
-   *  set up 
-   *  options string
-   *  and triangulate
-   *-----------------*/
-   // p: Read planar straight line graph
-   // q: quality mesh generation (Delaunay refinement)
-   // z: indexing starts at 0
-   // j: avoid duplicate points
-   // v: output voronoi struct also
-   // e: outputs list of edges
-  char *options = "pqzjve";	
+  /*------------------
+   *  get options
+   *------------------*/
+  char * options = get_triswitches(true);
 
   /*------------------
    *		Triangulate:
@@ -166,7 +159,7 @@ void MeshBase::create_mesh(struct triangulateio* in){
    *------------------*/
   set_points_from_triangleout(out);
   set_elements_from_triangleout(out);
-
+  set_edges_from_triangleout(out);
   /*-----------------
    *		clean up
    *-----------------*/
@@ -186,6 +179,7 @@ void MeshBase::create_mesh(struct triangulateio* in){
   free(vorout->normlist);
 
   delete vorout;
+  delete [] options;
 }
 
 // To set the points data from output of Triangle
@@ -247,5 +241,30 @@ void MeshBase::set_edges_from_triangleout(struct triangulateio *out){
       edgemarkers[i] = out->segmentmarkerlist[i];
     }
   }
+
+}
+
+// Get char* poiter to be used in Triangle from options
+char* MeshBase::get_triswitches(bool edges_option){
+  // Initialize string to be converted and the returned
+
+   // p: Read planar straight line graph
+   // q: quality mesh generation (Delaunay refinement)
+   // z: indexing starts at 0
+   // j: avoid duplicate points
+   // v: output voronoi struct also
+   // e: outputs list of edges
+  string options = "pqzjv";
+
+  if(edges_option){
+    options += "e";
+  }
+
+
+  // Convert string to char*
+  char* res = new char[options.length()+1];
+  copy(options.begin(), options.end(), res);
+  res[options.length()] = '\0';
+  return res;
 
 }

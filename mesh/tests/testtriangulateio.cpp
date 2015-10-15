@@ -143,50 +143,14 @@ int main(){
 	 *--------------------*/
 	 MeshBase testmesh(in);
 	 testmesh.print();
-	 /*
-	// Need to set up out and vorout
-	out->pointlist = NULL;
-	out->trianglelist = NULL;
-	out->segmentlist = NULL;
-	out->pointmarkerlist = NULL;
-	out->segmentmarkerlist = NULL;
-	out->edgelist = NULL;
-	out->neighborlist = NULL;
-	out->edgemarkerlist = NULL;
-
-	vorout->pointlist = NULL;
-	vorout->pointattributelist = NULL;
-	vorout->edgelist = NULL;
-	vorout->normlist = NULL;
-
-	char* options = "pqjnvzV";
-
-	triangulate(options, in, out, vorout);
-	*/
-
-
+	
   // Clean up:
   delete [] pointlist;
   delete [] pointmarkerlist;
   delete [] segmentlist;
   delete [] segmentmarkerlist;
   delete [] holelist;
-
-	/*
-	free(out->pointlist);
-	free(out->trianglelist);
-	free(out->segmentlist);
-	free(out->pointmarkerlist);
-	free(out->segmentmarkerlist);
-	free(out->neighborlist);
-	
-	free(vorout->pointlist);
-	free(vorout->pointattributelist);
-	free(vorout->normlist);
-	free(vorout->edgelist);
-	*/
-	delete in;
-	//delete out;
-	//delete vorout;
+  
+  delete in;
   return 0;
 }
