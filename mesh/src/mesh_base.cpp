@@ -253,6 +253,9 @@ void MeshBase::set_edges_from_triangleout(struct triangulateio *out){
 
       edgemarkers[i] = out->segmentmarkerlist[i];
     }
+    // Check orientation (I think it's not needed, when
+    // all edges are in the output.
+    assure_boundary_orientation();
   }
 
 }
@@ -302,7 +305,7 @@ int MeshBase::get_element_from_edge(int edge_ind){
       }
     }
   }
-  cout << "Couldn't find edge in any element";
+  cout << "Couldn't find edge in any element" << endl;
   return -1;
 }
 
@@ -315,6 +318,51 @@ int MeshBase::get_point_not_on_edge(int el_ind, int edge_ind){
       return tmp;
     }
   }
-  cout << "Could not find point outside of edge on element."
+  cout << "Could not find point outside of edge on element." << endl;
   return -1;
+}
+
+// Function to check if boundary edge is properly oriented:
+bool MeshBase::properly_oriented(int edge_ind){
+  // First of all check if edge is on the boundary:
+  if(edgemarkers[edge_ind] == 0){
+    cout << "Edge is not on boundary. Properly oriented by default" << endl;
+    return true;
+  }
+  // get vector for edge:
+  double xe = points[edges[edge_ind][1]][0]-points[edges[edge_ind][0]][0];
+  double ye = points[edges[edge_ind][1]][1]-points[edges[edge_ind][0]][1];
+
+  // Get vector starting from the same point as edge and ending at the point
+  // in element, not on edge.
+  int el_ind = get_element_from_edge(edge_ind);
+  int p_ind = get_point_not_on_edge(el_ind, edge_ind);
+
+  double xt = points[p_ind][0] - points[edges[edge_ind][0]][0];
+  double yt = points[p_ind][1] - points[edges[edge_ind][0]][1];
+
+  // And return true if cross product is positive:
+  return (xe*yt-xt*ye>0);
+}
+
+//Function to swap orientation of edge if not correct.
+void MeshBase::swap_orientation(int edge_ind){
+  int tmp = edges[edge_ind][0];
+  edges[edge_ind][0] = edges[edge_ind][1];
+  edges[edge_ind][1] = tmp;
+}
+
+// Lastly we go through boundary edges and assure orientation:
+void MeshBase::assure_boundary_orientation(){
+  // Go through all edges:
+  for(int inde=0; inde<num_edges; inde++){
+    //Check if on boundary:
+    if(edgemarkers[inde]!=0){
+      //Check if properly oriented:
+      if(!properly_oriented(inde)){
+        //if not, swap indices
+        swap_orientation(inde);
+      }
+    }
+  }
 }

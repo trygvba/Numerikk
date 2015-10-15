@@ -44,6 +44,9 @@ class MeshBase {
     // To be used when checking orientation of edge
     int get_element_from_edge(int edge_ind);                  // Get element index from edge index
     int get_point_not_on_edge(int el_ind, int edge_ind);  // get point index in element, not on edge.
+    bool properly_oriented(int edge_ind);   // Checks if boundary edge is properly oriented.
+    void swap_orientation(int edge_ind);
+    void assure_boundary_orientation();     // Assure edge orientation at the boundary.
 };
 
 
