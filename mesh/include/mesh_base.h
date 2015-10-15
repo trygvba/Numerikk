@@ -7,13 +7,13 @@ class MeshBase {
   public:
     // Constructors and destructors
     MeshBase();     // default constructor    
-		MeshBase(struct triangulateio* in);	// constructor taking in triangulateio struct
+    MeshBase(struct triangulateio* in);	// constructor taking in triangulateio struct
     ~MeshBase();
     
-		// Public member functions
-		void print();
+    // Public member functions
+    void print();
   private:
-		// Private member variables:
+    // Private member variables:
     int num_points; // number of points
     int num_tri;    // number of triangles
     int num_edges   // number of edges
