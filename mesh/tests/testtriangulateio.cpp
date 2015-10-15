@@ -141,7 +141,7 @@ int main(){
 	 *		Let's try to
 	 *    triangulate
 	 *--------------------*/
-	 MeshBase testmesh(in);
+	 MeshBase testmesh(in, true);
 	 testmesh.print();
 	
   // Clean up:

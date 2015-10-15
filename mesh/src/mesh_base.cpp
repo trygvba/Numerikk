@@ -26,7 +26,9 @@ MeshBase::MeshBase(){
   all_edges = false;
 }
 
-MeshBase::MeshBase(struct triangulateio* in){
+MeshBase::MeshBase(struct triangulateio* in, bool opt_edge):
+all_edges(opt_edge)
+{
 	create_mesh(in);
 }
 
@@ -74,6 +76,18 @@ void MeshBase::print(){
 		cout << i << ": " << elements[i][0] << " " << elements[i][1] <<
 			" " << elements[i][2] << endl;
 	}
+
+  cout << "\nMesh consists of " << num_edges;
+  if(all_edges){
+    cout << " edges:" << endl;
+  }
+  else{
+    cout << " boundary edges: " << endl;
+  }
+
+  for(int i=0; i<num_edges; i++){
+    cout << i << ": " << edges[i][0] << " " << edges[i][1] << endl;
+  }
 
 }
 
@@ -133,7 +147,6 @@ void MeshBase::create_mesh(struct triangulateio* in){
   out->segmentlist = NULL;
   out->segmentmarkerlist = NULL;
   out->edgelist = NULL;
-	 
   out->edgemarkerlist = NULL;
   // Voronoi
   vorout->pointlist = NULL;
@@ -146,7 +159,7 @@ void MeshBase::create_mesh(struct triangulateio* in){
   /*------------------
    *  get options
    *------------------*/
-  char * options = get_triswitches(true);
+  char * options = get_triswitches(all_edges);
 
   /*------------------
    *		Triangulate:
@@ -267,4 +280,41 @@ char* MeshBase::get_triswitches(bool edges_option){
   res[options.length()] = '\0';
   return res;
 
+}
+
+/*---------------------------------
+ * Functions to switch orientation
+ * on boundary edges
+ * so that subsequent natural
+ * boundary conditions are
+ * treated appropriately.
+ *----------------------------------*/
+int MeshBase::get_element_from_edge(int edge_ind){
+  // go through each element
+  for(int i=0; i<num_tri; i++){
+    // check if first edge index is in element
+    int tmp1 = edges[edge_ind][0];
+    if( tmp1==elements[i][0] || tmp1==elements[i][1] || tmp1==elements[i][2]){
+      // Check if also second index is in element
+      int tmp2 = edges[edge_ind][1];
+      if(tmp2==elements[i][0] || tmp2==elements[i][1] || tmp2==elements[i][2]){
+        return i;
+      }
+    }
+  }
+  cout << "Couldn't find edge in any element";
+  return -1;
+}
+
+int MeshBase::get_point_not_on_edge(int el_ind, int edge_ind){
+  // go through each point in the element:
+  for(int indp=0; indp<3; indp++){
+    int tmp=elements[el_ind][indp];
+    // Check if point is not on edge
+    if(tmp!=edges[edge_ind][0] && tmp!=edges[edge_ind][1] ){
+      return tmp;
+    }
+  }
+  cout << "Could not find point outside of edge on element."
+  return -1;
 }
