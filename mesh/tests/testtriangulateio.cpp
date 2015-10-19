@@ -137,12 +137,12 @@ int main(){
   in->holelist = holelist;
   in->numberofregions = num_regs;
 
-	/*--------------------
-	 *		Let's try to
-	 *    triangulate
-	 *--------------------*/
-	 MeshBase testmesh(in, false);
-	 testmesh.print();
+  /*--------------------
+   *		Let's try to
+   *    triangulate
+   *--------------------*/
+  MeshBase testmesh(in, true);
+  testmesh.print();
 	
   // Clean up:
   delete [] pointlist;

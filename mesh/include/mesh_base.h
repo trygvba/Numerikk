@@ -35,10 +35,12 @@ class MeshBase {
     int** edges;      // list of edges 
     int* edgemarkers; // list of edge markers
 
-		//Private member functions:
-		void create_mesh(struct triangulateio* in);	// To be used by most constructors.
-		void set_points_from_triangleout(struct triangulateio *out); // To set the points
-		void set_elements_from_triangleout(struct triangulateio *out); // set element data.
+    int** shared_edge;// array of triangles sharing an edge
+
+    //Private member functions:
+    void create_mesh(struct triangulateio* in);	// To be used by most constructors.
+    void set_points_from_triangleout(struct triangulateio *out); // To set the points
+    void set_elements_from_triangleout(struct triangulateio *out); // set element data.
     void set_edges_from_triangleout(struct triangulateio *out);    // set edge data.
     char* get_triswitches(bool edges_option);                 // Get char* pointer to be used by Triangle.
     // To be used when checking orientation of edge
@@ -47,6 +49,9 @@ class MeshBase {
     bool properly_oriented(int edge_ind);   // Checks if boundary edge is properly oriented.
     void swap_orientation(int edge_ind);
     void assure_boundary_orientation();     // Assure edge orientation at the boundary.
+
+    //Get edge_connectivity
+    void set_edge_connectivity(struct triangulateio *vorout);   // To get triangles sharing an edge
 };
 
 

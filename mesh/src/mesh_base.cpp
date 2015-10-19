@@ -24,6 +24,8 @@ MeshBase::MeshBase(){
   edges = NULL;
   edgemarkers = NULL;
   all_edges = false;
+
+  shared_edge = NULL;
 }
 
 MeshBase::MeshBase(struct triangulateio* in, bool opt_edge):
@@ -60,6 +62,14 @@ MeshBase::~MeshBase(){
   if(edgemarkers){
     delete [] edgemarkers;
   }
+
+  // Delete edge connectivity
+  if(shared_edge){
+    for(int i=0; i<num_edges; i++){
+      delete [] shared_edge[i];
+    }
+    delete [] shared_edge;
+  }
 }
 
 /*--------------------------------------------
@@ -87,6 +97,14 @@ void MeshBase::print(){
 
   for(int i=0; i<num_edges; i++){
     cout << i << ": " << edges[i][0] << " " << edges[i][1] << endl;
+  }
+
+  if(shared_edge){
+    cout << "\nThe edge connectivity is: " << endl;
+
+    for(int i=0; i<num_edges; i++){
+      cout << i << ": " << shared_edge[i][0] << " " << shared_edge[i][1] << endl;
+    }
   }
 
 }
@@ -173,6 +191,13 @@ void MeshBase::create_mesh(struct triangulateio* in){
   set_points_from_triangleout(out);
   set_elements_from_triangleout(out);
   set_edges_from_triangleout(out);
+
+  if(all_edges){
+    set_edge_connectivity(vorout);
+  }
+  else {
+    shared_edge = NULL;  
+  }
   /*-----------------
    *		clean up
    *-----------------*/
@@ -364,5 +389,17 @@ void MeshBase::assure_boundary_orientation(){
         swap_orientation(inde);
       }
     }
+  }
+}
+
+// Function to get array that gives which triangles share an edge:
+void MeshBase::set_edge_connectivity(struct triangulateio *vorout){
+  //Initialize array:
+  shared_edge = new int*[num_edges];
+  
+  for(int i=0; i<num_edges; i++){
+    shared_edge[i] = new int[2];
+    shared_edge[i][0] = vorout->edgelist[2*i];
+    shared_edge[i][1] = vorout->edgelist[2*i+1];
   }
 }
