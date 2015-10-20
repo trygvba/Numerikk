@@ -56,7 +56,7 @@ class MeshBase {
     void assure_boundary_orientation();     // Assure edge orientation at the boundary.
 
     //Get edge_connectivity
-    void set_edge_connectivity(struct triangulateio *vorout);   // To get triangles sharing an edge
+    void set_edge_connectivity(struct triangulateio *vorout);   // To get triangles sharing an edgelre
 };
 
 
