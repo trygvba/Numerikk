@@ -10,14 +10,7 @@ class MeshBase {
     MeshBase(struct triangulateio* in, bool opt_edge=false);	// constructor taking in triangulateio struct
     ~MeshBase();
     
-    // Public member functions
-    void print();
-  private:
-    // Private member variables:
-    int num_points; // number of points
-    int num_tri;    // number of triangles
-    int num_edges;   // number of edges
-
+    //Public member variables
     double** points;  // array with points
     int** elements;   // elements connectivity matrix
     // A note on the edges:
@@ -36,6 +29,18 @@ class MeshBase {
     int* edgemarkers; // list of edge markers
 
     int** shared_edge;// array of triangles sharing an edge
+
+    // Public member functions
+    void print();
+    int get_number_of_points();
+    int get_number_of_triangles();
+    int get_number_of_edges();
+    
+  private:
+    // Private member variables:
+    int num_points; // number of points
+    int num_tri;    // number of triangles
+    int num_edges;   // number of edges
 
     //Private member functions:
     void create_mesh(struct triangulateio* in);	// To be used by most constructors.

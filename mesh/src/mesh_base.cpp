@@ -110,9 +110,18 @@ void MeshBase::print(){
 }
 
 
+// GET FUNCTIONS:
+int MeshBase::get_number_of_points(){
+  return num_points;
+}
 
+int MeshBase::get_number_of_triangles(){
+  return num_tri;
+}
 
-
+int MeshBase::get_number_of_edges(){
+  return num_edges;
+}
 /*-------------------------------------------
  *		PRIVATE MEMBER FUNCTIONS
  *-------------------------------------------*/
