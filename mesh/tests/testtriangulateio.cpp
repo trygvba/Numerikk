@@ -141,8 +141,8 @@ int main(){
    *		Let's try to
    *    triangulate
    *--------------------*/
-  MeshBase testmesh(in, true);
-  testmesh.print();
+  MeshBase testmesh(in, true, 0.05);
+  //testmesh.print();
 	
   // Clean up:
   delete [] pointlist;

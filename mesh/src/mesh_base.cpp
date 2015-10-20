@@ -1,6 +1,6 @@
 //: mesh_base.cpp
-
 #include <iostream>
+#include <sstream>
 #include "mesh_base.h"
 #include "triangle.h"
 #include <cstdlib>
@@ -18,6 +18,7 @@ MeshBase::MeshBase(){
   num_points = 0;
   num_tri = 0;
   num_edges = 0;
+  area_constraint = -1.;
 
   points = NULL;
   elements = NULL;
@@ -28,8 +29,8 @@ MeshBase::MeshBase(){
   shared_edge = NULL;
 }
 
-MeshBase::MeshBase(struct triangulateio* in, bool opt_edge):
-all_edges(opt_edge)
+MeshBase::MeshBase(struct triangulateio* in, bool opt_edge, double ac):
+all_edges(opt_edge), area_constraint(ac)
 {
 	create_mesh(in);
 }
@@ -186,7 +187,7 @@ void MeshBase::create_mesh(struct triangulateio* in){
   /*------------------
    *  get options
    *------------------*/
-  char * options = get_triswitches(all_edges);
+  char * options = get_triswitches();
 
   /*------------------
    *		Triangulate:
@@ -295,7 +296,7 @@ void MeshBase::set_edges_from_triangleout(struct triangulateio *out){
 }
 
 // Get char* poiter to be used in Triangle from options
-char* MeshBase::get_triswitches(bool edges_option){
+char* MeshBase::get_triswitches(){
   // Initialize string to be converted and the returned
 
    // p: Read planar straight line graph
@@ -306,10 +307,18 @@ char* MeshBase::get_triswitches(bool edges_option){
    // e: outputs list of edges
   string options = "pqzjv";
 
-  if(edges_option){
+  if(all_edges){
     options += "e";
   }
 
+  if(area_constraint>0.){
+    cout << "Are we here?" << endl;
+    ostringstream numstr;
+    numstr << area_constraint;
+    options +="a" + numstr.str();
+  }
+  // Print resulting string:
+  cout << options << endl;
 
   // Convert string to char*
   char* res = new char[options.length()+1];
