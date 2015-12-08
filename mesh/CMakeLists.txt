@@ -9,6 +9,6 @@ add_subdirectory(src)
 # Add executables:
 add_executable(testtriangulateio tests/testtriangulateio.cpp)
 target_link_libraries(testtriangulateio 
-											Triangle
-											MeshBase)
+			Triangle
+			MeshBase)
 
