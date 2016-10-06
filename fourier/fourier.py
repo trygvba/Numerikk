@@ -109,11 +109,23 @@ class FourierFunction(_object):
     def get_N(self):
         return _fourier.FourierFunction_get_N(self)
 
+    def get_Ncoeffs(self):
+        return _fourier.FourierFunction_get_Ncoeffs(self)
+
     def get_eval(self, i):
         return _fourier.FourierFunction_get_eval(self, i)
 
     def get_fourier_coefficient(self, i):
         return _fourier.FourierFunction_get_fourier_coefficient(self, i)
+
+    def update_coefficients_from_evals(self):
+        return _fourier.FourierFunction_update_coefficients_from_evals(self)
+
+    def update_evals_from_coefficients(self):
+        return _fourier.FourierFunction_update_evals_from_coefficients(self)
+
+    def set_evals(self, in_eval):
+        return _fourier.FourierFunction_set_evals(self, in_eval)
 FourierFunction_swigregister = _fourier.FourierFunction_swigregister
 FourierFunction_swigregister(FourierFunction)
 
