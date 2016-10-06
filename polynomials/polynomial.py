@@ -117,6 +117,15 @@ class Polynomial1D(_object):
 
     def eval(self, x):
         return _polynomial.Polynomial1D_eval(self, x)
+
+    def eval_diff(self, x, n):
+        return _polynomial.Polynomial1D_eval_diff(self, x, n)
+
+    def get_zero(self, init_x, tol=1e-4, max_iter=1000):
+        return _polynomial.Polynomial1D_get_zero(self, init_x, tol, max_iter)
+
+    def set_ownership(self, own_flag):
+        return _polynomial.Polynomial1D_set_ownership(self, own_flag)
 Polynomial1D_swigregister = _polynomial.Polynomial1D_swigregister
 Polynomial1D_swigregister(Polynomial1D)
 
