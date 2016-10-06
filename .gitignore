@@ -1,2 +1,7 @@
 *.pyc
 *.py~
+*.so
+*.egg-info
+*_wrap.cpp
+
+*/build/*
