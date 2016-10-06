@@ -2,7 +2,7 @@
 #ifndef FOURIER_HPP
 #define FOURIER_HPP
 
-
+#include <fftw3.h>
 /************************************
  *      FOURIER CLASS:
  ************************************/
@@ -15,12 +15,12 @@ class FourierFunction {
         // Getter functions:
         int get_N();
         double get_eval(const int i);
-        void get_fourier_coefficient(const int i, double* out, int len);
+        void get_fourier_coefficient(const int i, double* out);
     private:
         int N;
         double* evals;      // Periodic evaluations
-        double* fcoeffs;    // Fourier coefficients
+        (fftw_complex*) fcoeffs;    // Fourier coefficients
         bool owns_evals;    // Ownership flag for evaluations
-}
+};
 
 #endif // FOURIER_HPP
