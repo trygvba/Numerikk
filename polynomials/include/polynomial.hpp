@@ -15,6 +15,7 @@ class Polynomial1D {
         int get_deg();
         double get_coeff(int i);
         void set_coeffs(double* c, int p);
+        double eval(double x);
 
     private:
         double* coeffs;

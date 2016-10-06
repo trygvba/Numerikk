@@ -1,4 +1,4 @@
-%module polynomials
+%module polynomial
 %{
     #define SWIG_FILE_WITH_INIT
     #include "polynomial.hpp"
