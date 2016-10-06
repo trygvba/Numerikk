@@ -15,11 +15,11 @@ class FourierFunction {
         // Getter functions:
         int get_N();
         double get_eval(const int i);
-        void get_fourier_coefficient(const int i, double* out);
+        void get_fourier_coefficient(const int i, double out[2]);
     private:
         int N;
         double* evals;      // Periodic evaluations
-        (fftw_complex*) fcoeffs;    // Fourier coefficients
+        double* fcoeffs;    // Fourier coefficients
         bool owns_evals;    // Ownership flag for evaluations
 };
 

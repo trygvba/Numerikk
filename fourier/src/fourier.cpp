@@ -19,10 +19,11 @@ FourierFunction::FourierFunction(double* in_eval, int in_N){
     evals = in_eval;
 
     // Allocate memory for fcoeffs:
-    fcoeffs = new fftw_complex[(N/2+1)];
+    fcoeffs = new double[2*(N/2+1)];
     // Set up for FFT:
     fftw_plan p;
-    p = fftw_plan_dft_r2c_1d(N, evals, fcoeffs);
+    p = fftw_plan_dft_r2c_1d(N, evals, (fftw_complex*) fcoeffs,
+                            FFTW_ESTIMATE);
     
     // Execute FFT:
     fftw_execute(p);
@@ -47,7 +48,7 @@ double FourierFunction::get_eval(const int i){
     return evals[i];
 }
 
-void FourierFunction::get_fourier_coefficient(const int i, double* out, int len){
-    out[0] = fcoeffs[i][0];
-    out[1] = fcoeffs[i][1];
+void FourierFunction::get_fourier_coefficient(const int i, double out[2]){
+    out[0] = fcoeffs[2*i];
+    out[1] = fcoeffs[2*i+1];
 }

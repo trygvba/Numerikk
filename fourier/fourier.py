@@ -112,8 +112,8 @@ class FourierFunction(_object):
     def get_eval(self, i):
         return _fourier.FourierFunction_get_eval(self, i)
 
-    def get_fourier_coefficient(self, i, out, len):
-        return _fourier.FourierFunction_get_fourier_coefficient(self, i, out, len)
+    def get_fourier_coefficient(self, i):
+        return _fourier.FourierFunction_get_fourier_coefficient(self, i)
 FourierFunction_swigregister = _fourier.FourierFunction_swigregister
 FourierFunction_swigregister(FourierFunction)
 
