@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 def f(x):
     return np.sin(x)
 
-evs = f(np.linspace(0., 2*np.pi, 10, endpoint=False))
+evs = f(np.linspace(0., 2*np.pi, 20, endpoint=False))
 
 # Fourier function:
 F = fourier.FourierFunction(evs)
