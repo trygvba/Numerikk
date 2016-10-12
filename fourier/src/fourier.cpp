@@ -3,6 +3,7 @@
 #include "fourier.hpp"
 #include "fftw3.h"
 #include <cmath>
+#include <iostream>
 /******************************
  *  FOURIER CLASS FUNCTIONS:
  ******************************/
@@ -19,6 +20,7 @@ FourierFunction::FourierFunction(double* in_eval, int in_N){
     N = in_N;
     evals = in_eval;
     owns_evals = false;
+
     // Allocate memory for fcoeffs:
     fcoeffs = new double[2*(N/2+1)];
     // Set up for FFT:
@@ -30,6 +32,11 @@ FourierFunction::FourierFunction(double* in_eval, int in_N){
     fftw_execute(p);
     // Destroy plan:
     fftw_destroy_plan(p);
+
+    // Scale Fourier coefficients:
+    for (int i=0; i<2*(N/2+1); i++){
+        fcoeffs[i] = fcoeffs[i]/((double) N);
+    }
 }
 
 FourierFunction::~FourierFunction(){
@@ -71,6 +78,10 @@ void FourierFunction::update_coefficients_from_evals(){
     fftw_execute(p);
     // Destroy plan:
     fftw_destroy_plan(p);
+    // Scale Fourier coefficients:
+    for (int i=0; i<2*(N/2+1); i++){
+        fcoeffs[i] = fcoeffs[i]/((double) N);
+    }
 }
 
 
@@ -84,10 +95,6 @@ void FourierFunction::update_evals_from_coefficients(){
     fftw_execute(p);
     // Destroy plan:
     fftw_destroy_plan(p);
-    // Scale as N:
-    for (int i=0; i<N; i++){
-        evals[i] *= 1./( (double) N);
-    }
 }
 
 /************************************************
@@ -117,4 +124,13 @@ void FourierFunction::set_evals(double* in_eval, int in_N){
     fftw_execute(p);
     // Destroy plan:
     fftw_destroy_plan(p);
+}
+
+void FourierFunction::scale_coefficient(const int i, const double c_scale[2]){
+    // Get current coefficient:
+    double* c = &(fcoeffs[2*i]);
+    // Scale using complex multiplication:
+    double temp = c[0];
+    c[0] = c[0]*c_scale[0] - c[1]*c_scale[1];
+    c[1] = temp*c_scale[1] + c[1]*c_scale[0];
 }

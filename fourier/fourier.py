@@ -126,6 +126,9 @@ class FourierFunction(_object):
 
     def set_evals(self, in_eval):
         return _fourier.FourierFunction_set_evals(self, in_eval)
+
+    def scale_coefficient(self, i, c_scale):
+        return _fourier.FourierFunction_scale_coefficient(self, i, c_scale)
 FourierFunction_swigregister = _fourier.FourierFunction_swigregister
 FourierFunction_swigregister(FourierFunction)
 

@@ -23,6 +23,11 @@ class FourierFunction {
 
         // Setter functions:
         void set_evals(double* in_eval, int in_N);
+
+        /* Scale coefficient number i by a complex number
+         * given by c_scale.
+         */
+        void scale_coefficient(const int i, const double c_scale[2]);
     private:
         int N;
         double* evals;      // Periodic evaluations
