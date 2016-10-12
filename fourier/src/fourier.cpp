@@ -18,7 +18,7 @@ FourierFunction::FourierFunction(double* in_eval, int in_N){
     // Number of points is then N:
     N = in_N;
     evals = in_eval;
-
+    owns_evals = false;
     // Allocate memory for fcoeffs:
     fcoeffs = new double[2*(N/2+1)];
     // Set up for FFT:
