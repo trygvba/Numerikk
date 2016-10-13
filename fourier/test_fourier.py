@@ -9,7 +9,7 @@ import time
 def f(x):
     return 1.*(x < np.pi )
 
-N = 1000
+N = 20
 x = np.linspace(0., 2*np.pi, N, endpoint = False)
 evs = f(x)
 
@@ -29,3 +29,4 @@ F.update_evals_from_coefficients()
 plt.plot(x,F.get_evals())
 plt.show()
 
+G = fourier.FourierFunction(F)

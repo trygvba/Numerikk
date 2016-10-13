@@ -16,7 +16,7 @@
 
 // Rename section:
 %rename("_get_evals") 
-        FourierFunction::get_evals(double* output, int output_N);
+        FourierFunction::get_evals(double* output, int output_N) const;
 
 // Include FILES:
 %include "fourier.hpp"

@@ -118,6 +118,9 @@ class FourierFunction(_object):
     def _get_evals(self, output):
         return _fourier.FourierFunction__get_evals(self, output)
 
+    def get_updated_status(self):
+        return _fourier.FourierFunction_get_updated_status(self)
+
     def get_fourier_coefficient(self, i):
         return _fourier.FourierFunction_get_fourier_coefficient(self, i)
 
