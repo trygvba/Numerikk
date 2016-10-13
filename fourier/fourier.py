@@ -115,6 +115,9 @@ class FourierFunction(_object):
     def get_eval(self, i):
         return _fourier.FourierFunction_get_eval(self, i)
 
+    def _get_evals(self, output):
+        return _fourier.FourierFunction__get_evals(self, output)
+
     def get_fourier_coefficient(self, i):
         return _fourier.FourierFunction_get_fourier_coefficient(self, i)
 
@@ -129,9 +132,17 @@ class FourierFunction(_object):
 
     def scale_coefficient(self, i, c_scale):
         return _fourier.FourierFunction_scale_coefficient(self, i, c_scale)
+
+    def get_evals(self):
+        return self._get_evals(self.get_N())
+
 FourierFunction_swigregister = _fourier.FourierFunction_swigregister
 FourierFunction_swigregister(FourierFunction)
 
+
+def fejer_smoothing(f):
+    return _fourier.fejer_smoothing(f)
+fejer_smoothing = _fourier.fejer_smoothing
 # This file is compatible with both classic and new-style classes.
 
 

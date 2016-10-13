@@ -60,6 +60,11 @@ double FourierFunction::get_eval(const int i){
     return evals[i];
 }
 
+void FourierFunction::get_evals(double* output, int output_N){
+    for (int i=0; i<N; i++){
+        output[i] = evals[i];
+    }
+}
 void FourierFunction::get_fourier_coefficient(const int i, double out[2]){
     out[0] = fcoeffs[2*i];
     out[1] = fcoeffs[2*i+1];
@@ -133,4 +138,25 @@ void FourierFunction::scale_coefficient(const int i, const double c_scale[2]){
     double temp = c[0];
     c[0] = c[0]*c_scale[0] - c[1]*c_scale[1];
     c[1] = temp*c_scale[1] + c[1]*c_scale[0];
+}
+
+/*******************************************
+ *          SMOOTHERS:
+ *******************************************/
+void fejer_smoothing(FourierFunction& f){
+    // Declare variables:
+    int Ncoeffs;
+    double c[2];
+    // Imaginary part of scaling is always 0.
+    c[1] = 0.;
+    // Get number of coefficients:
+    Ncoeffs = f.get_Ncoeffs();
+
+    // Go through each coefficient:
+    for (int i=0; i<Ncoeffs; i++){
+        c[0] = 1. - ( (double) i )/Ncoeffs;
+        // Scale by c:
+        f.scale_coefficient(i, c);
+    }
+    
 }

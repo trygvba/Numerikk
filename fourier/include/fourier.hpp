@@ -15,6 +15,7 @@ class FourierFunction {
         int get_N();
         int get_Ncoeffs();
         double get_eval(const int i);
+        void get_evals(double* output, int output_N);
         void get_fourier_coefficient(const int i, double out[2]);
 
         // Using FFTW to update evaluations or coefficents:
@@ -35,4 +36,10 @@ class FourierFunction {
         bool owns_evals;    // Ownership flag for evaluations
 };
 
+
+
+/************************
+ *      SMOOTHERS:
+ ************************/
+void fejer_smoothing(FourierFunction& f);
 #endif // FOURIER_HPP
