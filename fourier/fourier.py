@@ -133,11 +133,65 @@ class FourierFunction(_object):
     def set_evals(self, in_eval):
         return _fourier.FourierFunction_set_evals(self, in_eval)
 
+    def set_eval(self, i, val):
+        return _fourier.FourierFunction_set_eval(self, i, val)
+
+    def set_coefficient(self, i, cval):
+        return _fourier.FourierFunction_set_coefficient(self, i, cval)
+
     def scale_coefficient(self, i, c_scale):
         return _fourier.FourierFunction_scale_coefficient(self, i, c_scale)
 
+    def __add__(self, other):
+        return _fourier.FourierFunction___add__(self, other)
+
+    def __iadd__(self, other):
+        return _fourier.FourierFunction___iadd__(self, other)
+
+    def __imul__(self, a):
+        return _fourier.FourierFunction___imul__(self, a)
+
+    def __isub__(self, other):
+        return _fourier.FourierFunction___isub__(self, other)
+
+    def _add(self, a):
+        return _fourier.FourierFunction__add(self, a)
+
+    def _isub(self, a):
+        return _fourier.FourierFunction__isub(self, a)
+
+    def __str__(self):
+        return _fourier.FourierFunction___str__(self)
+
+    def _rmul(self, a):
+        return _fourier.FourierFunction__rmul(self, a)
+
+    def _subtract(self, rval):
+        return _fourier.FourierFunction__subtract(self, rval)
+
+    def _imul(self, a):
+        return _fourier.FourierFunction__imul(self, a)
+
     def get_evals(self):
         return self._get_evals(self.get_N())
+
+    def __iadd__(self, other):
+        self._add(other)
+        return self
+
+    def __rmul__(self, a):
+        return self._rmul(a)
+
+    def __imul__(self, a):
+        self._imul(a);
+        return self
+
+    def __sub__(self, rval):
+        return self._subtract(rval)
+
+    def __isub__(self, rval):
+        self._isub(rval)
+        return self
 
 FourierFunction_swigregister = _fourier.FourierFunction_swigregister
 FourierFunction_swigregister(FourierFunction)
