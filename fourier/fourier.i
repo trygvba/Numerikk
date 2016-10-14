@@ -53,6 +53,10 @@
         return a*(*self);
     }
     
+    /* For multiplication by two functions: */
+    FourierFunction _mul(FourierFunction& rval){
+        return (*self)*rval;
+    }
     /* For subtraction */
     FourierFunction _subtract(const FourierFunction& rval){
         return (*self) - rval;
@@ -76,6 +80,9 @@
         
         def __rmul__(self, a):
             return self._rmul(a)
+
+        def __mul__(self, other):
+            return self._mul(other)
 
         def __imul__(self, a):
             self._imul(a);

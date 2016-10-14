@@ -139,6 +139,9 @@ class FourierFunction(_object):
     def set_coefficient(self, i, cval):
         return _fourier.FourierFunction_set_coefficient(self, i, cval)
 
+    def set_updated_status(self, status):
+        return _fourier.FourierFunction_set_updated_status(self, status)
+
     def scale_coefficient(self, i, c_scale):
         return _fourier.FourierFunction_scale_coefficient(self, i, c_scale)
 
@@ -166,6 +169,9 @@ class FourierFunction(_object):
     def _rmul(self, a):
         return _fourier.FourierFunction__rmul(self, a)
 
+    def _mul(self, rval):
+        return _fourier.FourierFunction__mul(self, rval)
+
     def _subtract(self, rval):
         return _fourier.FourierFunction__subtract(self, rval)
 
@@ -182,6 +188,9 @@ class FourierFunction(_object):
     def __rmul__(self, a):
         return self._rmul(a)
 
+    def __mul__(self, other):
+        return self._mul(other)
+
     def __imul__(self, a):
         self._imul(a);
         return self
@@ -196,6 +205,10 @@ class FourierFunction(_object):
 FourierFunction_swigregister = _fourier.FourierFunction_swigregister
 FourierFunction_swigregister(FourierFunction)
 
+
+def diff(F):
+    return _fourier.diff(F)
+diff = _fourier.diff
 
 def fejer_smoothing(f):
     return _fourier.fejer_smoothing(f)

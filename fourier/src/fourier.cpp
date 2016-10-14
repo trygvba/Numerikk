@@ -56,7 +56,6 @@ FourierFunction::FourierFunction(const FourierFunction& f){
     }
     updated = false;
     // Update evaluations accordingly:
-    this->update_evals_from_coefficients();
 }
 
 FourierFunction::~FourierFunction(){
@@ -179,6 +178,10 @@ void FourierFunction::set_coefficient(const int i, double cval[2]){
         updated = false;
 }
 
+void FourierFunction::set_updated_status(bool status){
+    updated = status;
+}
+
 void FourierFunction::scale_coefficient(const int i, const double c_scale[2]){
     // Get current coefficient:
     double* c = &(fcoeffs[2*i]);
@@ -240,8 +243,6 @@ FourierFunction& FourierFunction::operator=(const FourierFunction& other){
             other.get_fourier_coefficient(i, temp);
         }
         updated = false;
-        // Update evaluations accordingly:
-        this->update_evals_from_coefficients();
     }
     return *this;
 }
@@ -311,9 +312,31 @@ FourierFunction operator*(double a, const FourierFunction& rF){
         temp[1] *= a;
         result.set_coefficient(i, temp);
     }
+    result.set_updated_status(false);
     return result;
 }
 
+FourierFunction operator*(FourierFunction& lval, FourierFunction& rval){
+    // Check that length is appropriate:
+    if (lval.get_N() != rval.get_N()){
+        throw "Factors in FourierFunction * were not of equal length.";
+    }
+    // Need to update lval, if necessary:
+    if (!lval.get_updated_status()){
+        lval.update_evals_from_coefficients();
+    }
+    // Create result:
+    FourierFunction result(rval);
+    result.update_evals_from_coefficients();
+    // Go through each point:
+    for (int i=0; i<result.get_N(); i++){
+        result.set_eval(i, result.get_eval(i) * lval.get_eval(i));
+    }
+    result.set_updated_status(false);
+    // Update coefficents:
+    result.update_coefficients_from_evals();
+    return result;
+}
 FourierFunction operator-(const FourierFunction& lval, const FourierFunction& rval){
     // Declare result:
     FourierFunction result(rval);
@@ -327,6 +350,22 @@ FourierFunction operator-(const FourierFunction& lval, const FourierFunction& rv
 std::ostream & operator<< ( std::ostream& os, const FourierFunction& f){
     os << "Instance of FourierFunction with " << f.get_N() << " points at " << &f;
     return os;
+}
+
+// Differentiate:
+FourierFunction diff(const FourierFunction& F){
+    // Declare result:
+    FourierFunction dF(F);
+    // Scaling:
+    double cdiff[2];
+    cdiff[0] = 0.;
+    for (int i=0; i<F.get_Ncoeffs(); i++){
+        cdiff[1] = (double) i;
+        // Scale coefficient:
+        dF.scale_coefficient(i, cdiff);
+    }
+    // Return
+    return dF;
 }
 /*******************************************
  *          SMOOTHERS:

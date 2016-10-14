@@ -33,6 +33,7 @@ class FourierFunction {
         void set_evals(double* in_eval, int in_N);          // Set new evaluations.
         void set_eval(const int i, double val);
         void set_coefficient(const int i, double cval[2]);
+        void set_updated_status(bool status);
 
         /* Scale coefficient number i by a complex number
          * given by c_scale.
@@ -42,16 +43,16 @@ class FourierFunction {
     /********************************
      *      OPERATORS:
      ********************************/
-    // Add two Fourier Functions to get a new:
-    FourierFunction operator+(const FourierFunction& other);
-    // Assignment operator (Rule of three)
-    FourierFunction& operator=(const FourierFunction& other);
-    // Incremental adder:
-    void operator+=(const FourierFunction& other);
-    // Incremental scaler:
-    void operator*=(double a);
-    // Incremental subtraction:
-    void operator-=(const FourierFunction& other);
+        // Add two Fourier Functions to get a new:
+        FourierFunction operator+(const FourierFunction& other);
+        // Assignment operator (Rule of three)
+        FourierFunction& operator=(const FourierFunction& other);
+        // Incremental adder:
+        void operator+=(const FourierFunction& other);
+        // Incremental scaler:
+        void operator*=(double a);
+        // Incremental subtraction:
+        void operator-=(const FourierFunction& other);
     
     /********************************
      *  PRIVATE MEMBER VARIABLES:
@@ -70,9 +71,13 @@ class FourierFunction {
 std::ostream & operator<< ( std::ostream& os,  const FourierFunction& f);
 // Scale by a double:
 FourierFunction operator*(double a, const FourierFunction& rF);
+FourierFunction operator*(FourierFunction& lval, FourierFunction& rval);
 // Subtract two functions:
 FourierFunction operator-(const FourierFunction& lval, const FourierFunction& rval);
 
+
+// Differentiate a FourierFunction
+FourierFunction diff(const FourierFunction& F);
 
 /************************
  *      SMOOTHERS:
