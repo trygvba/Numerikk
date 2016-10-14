@@ -213,6 +213,54 @@ diff = _fourier.diff
 def fejer_smoothing(f):
     return _fourier.fejer_smoothing(f)
 fejer_smoothing = _fourier.fejer_smoothing
+class FluxFunctionBase(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FluxFunctionBase, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, FluxFunctionBase, name)
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined - class is abstract")
+    __repr__ = _swig_repr
+    __swig_destroy__ = _fourier.delete_FluxFunctionBase
+    __del__ = lambda self: None
+
+    def evaluate(self, u):
+        return _fourier.FluxFunctionBase_evaluate(self, u)
+FluxFunctionBase_swigregister = _fourier.FluxFunctionBase_swigregister
+FluxFunctionBase_swigregister(FluxFunctionBase)
+
+class FluxFunctionPower(FluxFunctionBase):
+    __swig_setmethods__ = {}
+    for _s in [FluxFunctionBase]:
+        __swig_setmethods__.update(getattr(_s, '__swig_setmethods__', {}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, FluxFunctionPower, name, value)
+    __swig_getmethods__ = {}
+    for _s in [FluxFunctionBase]:
+        __swig_getmethods__.update(getattr(_s, '__swig_getmethods__', {}))
+    __getattr__ = lambda self, name: _swig_getattr(self, FluxFunctionPower, name)
+    __repr__ = _swig_repr
+
+    def __init__(self, *args):
+        this = _fourier.new_FluxFunctionPower(*args)
+        try:
+            self.this.append(this)
+        except Exception:
+            self.this = this
+    __swig_destroy__ = _fourier.delete_FluxFunctionPower
+    __del__ = lambda self: None
+
+    def evaluate(self, u):
+        return _fourier.FluxFunctionPower_evaluate(self, u)
+
+    def get_n(self):
+        return _fourier.FluxFunctionPower_get_n(self)
+
+    def __str__(self):
+        return _fourier.FluxFunctionPower___str__(self)
+FluxFunctionPower_swigregister = _fourier.FluxFunctionPower_swigregister
+FluxFunctionPower_swigregister(FluxFunctionPower)
+
 # This file is compatible with both classic and new-style classes.
 
 

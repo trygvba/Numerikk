@@ -4,9 +4,13 @@ from distutils.core import setup, Extension
 from numpy import get_include
 import os
 
+# Source files:
+source_files = ['fourier.cpp', 'flux_function.cpp']
+# Add src folder to path:
+source_files = ['src/'+filename for filename in source_files]
 # Create extension instance:
 fourier_module = Extension('_fourier',
-                        ['src/fourier.cpp', 'fourier.i'],
+                        source_files + ['fourier.i'],
                         swig_opts = ['-c++', '-I./include'],
                         include_dirs = [get_include(), '.', './include/'],
                         libraries = ['fftw3'],

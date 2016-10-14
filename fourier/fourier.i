@@ -2,10 +2,12 @@
 %{
     #define SWIG_FILE_WITH_INIT
     #include "fourier.hpp"
+    #include "flux_function.hpp"
 %}
 
 %include "numpy.i"
 %include <std_string.i>
+
 %init %{
     import_array();
 %}
@@ -17,7 +19,6 @@
 %apply (double ARGOUT_ARRAY1[ANY]) { (double out[2]) };
 %apply (double* ARGOUT_ARRAY1, int DIM1) { (double* output, int output_N) };
 
-
 /**************************
  *      RENAMES:
  **************************/
@@ -28,7 +29,7 @@
  *  INCLUDE FILES:
  **************************/
 %include "fourier.hpp"
-
+%include "flux_function.hpp"
 /**************************
  *  EXTEND DIRECTIVE:
  **************************/
@@ -96,3 +97,15 @@
             return self
     %}
 };
+
+%extend  FluxFunctionPower{
+    /* For print(F) statement */
+    std::string __str__(){
+        std::ostringstream s;
+        s << (*self);
+        return s.str();
+    }
+ 
+}
+
+
