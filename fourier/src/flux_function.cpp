@@ -23,4 +23,5 @@ int FluxFunctionPower::get_n() const{
 /* Operators: */
 std::ostream & operator << ( std::ostream& os, const FluxFunctionPower& f ){
     os << "Flux function u**" << f.get_n() << " at " << &f;
+    return os;
 }

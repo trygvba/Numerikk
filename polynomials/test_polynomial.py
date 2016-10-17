@@ -12,6 +12,10 @@ b = np.array([1., 0., -0.5])
 # Make a polynomial
 p = polynomial.Polynomial1D(b)
 
+# Make another polynomial:
+c = np.array([0., 0., 0., 1.])
+q = polynomial.Polynomial1D(c)
+
 # Set up some points:
 X = np.linspace(-1., 1., 100)
 evals = []
@@ -21,3 +25,9 @@ for x in X:
 
 plt.plot(X, evals)
 plt.show()
+
+
+# Test Chebyshev polynomials:
+for i in range(10):
+    C = polynomial.generate_chebyshev_polynomial(i)
+    print(C.get_all_coeffs())

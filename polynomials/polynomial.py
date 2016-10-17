@@ -112,6 +112,12 @@ class Polynomial1D(_object):
     def get_coeff(self, i):
         return _polynomial.Polynomial1D_get_coeff(self, i)
 
+    def _get_all_coeffs(self, output):
+        return _polynomial.Polynomial1D__get_all_coeffs(self, output)
+
+    def set_coefficient(self, i, val):
+        return _polynomial.Polynomial1D_set_coefficient(self, i, val)
+
     def set_coeffs(self, c):
         return _polynomial.Polynomial1D_set_coeffs(self, c)
 
@@ -126,6 +132,48 @@ class Polynomial1D(_object):
 
     def set_ownership(self, own_flag):
         return _polynomial.Polynomial1D_set_ownership(self, own_flag)
+
+    def __add__(self, other):
+        return _polynomial.Polynomial1D___add__(self, other)
+
+    def __sub__(self, other):
+        return _polynomial.Polynomial1D___sub__(self, other)
+
+    def __iadd__(self, other):
+        return _polynomial.Polynomial1D___iadd__(self, other)
+
+    def __imul__(self, a):
+        return _polynomial.Polynomial1D___imul__(self, a)
+
+    def __isub__(self, other):
+        return _polynomial.Polynomial1D___isub__(self, other)
+
+    def _iadd(self, a):
+        return _polynomial.Polynomial1D__iadd(self, a)
+
+    def _imul(self, a):
+        return _polynomial.Polynomial1D__imul(self, a)
+
+    def _isub(self, a):
+        return _polynomial.Polynomial1D__isub(self, a)
+
+    def __str__(self):
+        return _polynomial.Polynomial1D___str__(self)
+    def get_all_coeffs(self):
+        return self._get_all_coeffs(self.get_deg())
+
+    def __iadd__(self, other):
+        self._iadd(other)
+        return self
+
+    def __rmul__(self, a):
+        self._imul(a)
+        return self
+
+    def __isub__(self, other):
+        self._isub(other)
+        return self
+
 Polynomial1D_swigregister = _polynomial.Polynomial1D_swigregister
 Polynomial1D_swigregister(Polynomial1D)
 

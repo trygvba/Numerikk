@@ -3,7 +3,7 @@
 #define POLYNOMIAL_HPP
 
 
-#include <vector>
+#include <iostream>
 /**************************************
  *      1D Polynomial class
  **************************************/
@@ -19,6 +19,8 @@ class Polynomial1D {
 
         int get_deg() const;
         double get_coeff(const int i) const;
+        void get_all_coeffs(double *output, int output_N) const;
+        void set_coefficient(const int i, double val);
         void set_coeffs(double* c, int p);
         double eval(double x) const;
         double eval_diff(double x, int n) const;
@@ -26,6 +28,18 @@ class Polynomial1D {
 
         void set_ownership(bool own_flag);
         
+    /******************
+     *  OPERATORS:
+     ******************/
+        Polynomial1D operator+(const Polynomial1D& other);
+        Polynomial1D operator-(const Polynomial1D& other);
+        Polynomial1D& operator=(const Polynomial1D& other);
+        void operator+=(const Polynomial1D& other);
+        // Incremental scaler:
+        void operator*=(double a);
+        // Incremental subtractor:
+        void operator-=(const Polynomial1D& other);
+
     private:
         double* coeffs;
         int deg;
@@ -33,6 +47,10 @@ class Polynomial1D {
         
 };
 
+/********************************************
+ *          OPERATORS:
+ ********************************************/
+std::ostream& operator<<(std::ostream& os, const Polynomial1D& poly);
 /********************************************
  *  GENERATE DIFFERENT TYPES OF POLYNOMIALS:
  ********************************************/
