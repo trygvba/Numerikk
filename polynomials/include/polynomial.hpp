@@ -10,15 +10,19 @@
 class Polynomial1D {
     public:
         Polynomial1D(double* c, int p);
+        // Copy constructor:
+        Polynomial1D(const Polynomial1D& poly);
+        // Default constructor:
         Polynomial1D();
+        // Destructor:
         ~Polynomial1D();
 
-        int get_deg();
-        double get_coeff(const int i);
+        int get_deg() const;
+        double get_coeff(const int i) const;
         void set_coeffs(double* c, int p);
-        double eval(double x);
-        double eval_diff(double x, int n);
-        double get_zero(double init_x, double tol=1e-4, int max_iter = 1000);
+        double eval(double x) const;
+        double eval_diff(double x, int n) const;
+        double get_zero(double init_x, double tol=1e-4, int max_iter = 1000) const;
 
         void set_ownership(bool own_flag);
         
@@ -29,4 +33,8 @@ class Polynomial1D {
         
 };
 
+/********************************************
+ *  GENERATE DIFFERENT TYPES OF POLYNOMIALS:
+ ********************************************/
+Polynomial1D generate_chebyshev_polynomial(int n);
 #endif // POLYNOMIAL_HPP

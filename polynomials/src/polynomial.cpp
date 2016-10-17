@@ -14,6 +14,19 @@ Polynomial1D::Polynomial1D(double* c, int p){
     owns = false;
 }
 
+// Copy constructor:
+Polynomial1D::Polynomial1D(const Polynomial1D& poly){
+    // Get polynomial degree:
+    deg = poly.get_deg();
+    // Allocate memory for coefficients:
+    coeffs = new double[deg];
+    // Go through each coefficient:
+    for (int i=0; i<deg; i++){
+        coeffs[i] = poly.get_coeff(i);
+    }
+    // Set ownership:
+    set_ownership(true);
+}
 // Default constructor:
 Polynomial1D::Polynomial1D(){
     coeffs = NULL;
@@ -28,12 +41,12 @@ Polynomial1D::~Polynomial1D(){
 }
 
 // Get degree:
-int Polynomial1D::get_deg(){
+int Polynomial1D::get_deg() const {
     return deg;
 }
 
 // Get coefficient:
-double Polynomial1D::get_coeff(const int i){
+double Polynomial1D::get_coeff(const int i) const{
     if (i<0 || i >= deg){
         cout << "Coefficient index was not valid." << endl;
         return 0.;
@@ -48,7 +61,7 @@ void Polynomial1D::set_coeffs(double* c, int p){
 }
 
 // Evaluate polynomial:
-double Polynomial1D::eval(double x){
+double Polynomial1D::eval(double x) const{
     // Declare variable:
     double res = 0.0;
 
@@ -62,7 +75,7 @@ double Polynomial1D::eval(double x){
 }
 
 // Evaluate n'th derivative of Polynomial:
-double Polynomial1D::eval_diff(double x, int n){
+double Polynomial1D::eval_diff(double x, int n) const{
     if (n<0 || n >= get_deg()){
         return 0.;
     }
@@ -88,7 +101,7 @@ void Polynomial1D::set_ownership(bool own_flag){
 }
 
 /* Calculate zero of polynomial using Newton's method: */
-double Polynomial1D::get_zero(double init_x, double tol, int max_iter){
+double Polynomial1D::get_zero(double init_x, double tol, int max_iter) const{
     // Declare variables:
     double x = init_x;
     double px, px0, dpx;
@@ -104,4 +117,13 @@ double Polynomial1D::get_zero(double init_x, double tol, int max_iter){
         x = x - px/dpx;
     }
     return x;
+}
+
+
+/*************************************************************
+ *      GENERATE POLYNOMIALS:
+ *************************************************************/
+Polynomial1D generate_chebyshev_polynomial(int n){
+    // Leave empty for now:
+    return Polynomial1D();
 }
